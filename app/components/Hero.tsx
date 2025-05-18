@@ -32,11 +32,11 @@ export default function Hero() {
         }, [isSettled]);
 
         return (
-                <section className="relative min-h-screen flex flex-col items-center justify-center bg-white dark:bg-gray-900 px-4">
+                <section className="relative min-h-screen flex flex-col items-center justify-center bg-white dark:bg-black px-4">
                         {/* Simple elegant gradient background */}
                         <div className="absolute inset-0 overflow-hidden z-0">
                                 <motion.div
-                                        className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-blue-950/30 dark:via-indigo-950/30 dark:to-purple-950/30"
+                                        className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:hidden"
                                         animate={{
                                                 background: [
                                                         "linear-gradient(to bottom right, rgba(239, 246, 255, 1), rgba(238, 242, 255, 1), rgba(250, 245, 255, 1))",
@@ -51,9 +51,9 @@ export default function Hero() {
                                 />
 
                                 {/* Dark mode overlay - only visible in dark mode */}
-                                <div className="absolute inset-0 bg-gradient-to-br from-blue-950/30 via-indigo-950/30 to-purple-950/30 opacity-0 dark:opacity-100 transition-opacity duration-300"></div>
+                                <div className="absolute inset-0 bg-black opacity-0 dark:opacity-100 transition-opacity duration-300"></div>
 
-                                {/* Subtle floating dots */}
+                                {/* Subtle floating dots - visible in both light and dark modes */}
                                 {[...Array(8)].map((_, i) => (
                                         <motion.div
                                                 key={i}

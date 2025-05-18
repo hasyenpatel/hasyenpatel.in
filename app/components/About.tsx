@@ -57,7 +57,7 @@ export default function About() {
                                                 whileInView={{ opacity: 1, x: 0 }}
                                                 viewport={{ once: true }}
                                                 transition={{ duration: 0.8, delay: 0.4 }}
-                                                className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800"
+                                                className="bg-white dark:bg-black rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800"
                                         >
                                                 <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white font-display">I'm Hasyen Patel</h3>
                                                 <p className="mb-4 text-gray-600 dark:text-gray-300">
@@ -67,40 +67,43 @@ export default function About() {
                                                         My diverse background includes professional experience as an animator for several years, as well as a degree in Music. This creative foundation complements my technical skills, allowing me to approach problem-solving with both analytical and artistic perspectives.
                                                 </p>
 
-                                                {/* Redesigned Education Section */}
+                                                {/* Redesigned Education Section with proper timeline */}
                                                 <div className="mb-6">
                                                         <h4 className="text-xl font-semibold mb-4 text-primary dark:text-primary-dark">Education Journey</h4>
-                                                        <div className="relative border-l-0 pl-6 space-y-6">
+                                                        <div className="relative pl-10 border-l border-primary/30 dark:border-primary-dark/30 space-y-6">
                                                                 {/* Master's */}
-                                                                <div className="relative before:absolute before:top-0 before:bottom-1/2 before:translate-y-[3rem] before:-left-[8px] before:w-0.5 before:bg-primary/30 dark:before:bg-primary-dark/30">
-                                                                        <div className="absolute -left-[31px] top-0 h-6 w-6 rounded-full bg-primary dark:bg-primary-dark flex items-center justify-center z-10">
-                                                                                <div className="h-3 w-3 rounded-full bg-white dark:bg-gray-900"></div>
+                                                                <div className="relative">
+                                                                        <div className="absolute -left-[21px] top-0 h-6 w-6 rounded-full bg-primary dark:bg-primary-dark flex items-center justify-center z-10">
+                                                                                <div className="h-3 w-3 rounded-full bg-white dark:bg-black"></div>
                                                                         </div>
-                                                                        <div className="mb-1">
+                                                                        <div className="mb-2">
                                                                                 <h5 className="font-semibold text-lg text-gray-900 dark:text-white">Master's Degree</h5>
                                                                                 <p className="text-primary dark:text-primary-dark font-medium">Georgia Institute of Technology</p>
+                                                                                <p className="text-sm text-gray-500 dark:text-gray-400">2020 - 2022</p>
                                                                         </div>
                                                                 </div>
 
                                                                 {/* Bachelor's */}
-                                                                <div className="relative before:absolute before:top-0 before:bottom-1/2 before:translate-y-[3rem] before:-left-[8px] before:w-0.5 before:bg-primary/30 dark:before:bg-primary-dark/30">
-                                                                        <div className="absolute -left-[31px] top-0 h-6 w-6 rounded-full bg-primary dark:bg-primary-dark flex items-center justify-center z-10">
-                                                                                <div className="h-3 w-3 rounded-full bg-white dark:bg-gray-900"></div>
+                                                                <div className="relative">
+                                                                        <div className="absolute -left-[21px] top-0 h-6 w-6 rounded-full bg-primary dark:bg-primary-dark flex items-center justify-center z-10">
+                                                                                <div className="h-3 w-3 rounded-full bg-white dark:bg-black"></div>
                                                                         </div>
-                                                                        <div className="mb-1">
+                                                                        <div className="mb-2">
                                                                                 <h5 className="font-semibold text-lg text-gray-900 dark:text-white">Bachelor's Degree</h5>
                                                                                 <p className="text-primary dark:text-primary-dark font-medium">Toronto Metropolitan University</p>
+                                                                                <p className="text-sm text-gray-500 dark:text-gray-400">2016 - 2020</p>
                                                                         </div>
                                                                 </div>
 
-                                                                {/* School - no line after this */}
+                                                                {/* School */}
                                                                 <div className="relative">
-                                                                        <div className="absolute -left-[31px] top-0 h-6 w-6 rounded-full bg-primary dark:bg-primary-dark flex items-center justify-center z-10">
-                                                                                <div className="h-3 w-3 rounded-full bg-white dark:bg-gray-900"></div>
+                                                                        <div className="absolute -left-[21px] top-0 h-6 w-6 rounded-full bg-primary dark:bg-primary-dark flex items-center justify-center z-10">
+                                                                                <div className="h-3 w-3 rounded-full bg-white dark:bg-black"></div>
                                                                         </div>
                                                                         <div>
                                                                                 <h5 className="font-semibold text-lg text-gray-900 dark:text-white">School Education</h5>
                                                                                 <p className="text-primary dark:text-primary-dark font-medium">Amrita Vidyalayam</p>
+                                                                                <p className="text-sm text-gray-500 dark:text-gray-400">2002 - 2016</p>
                                                                         </div>
                                                                 </div>
                                                         </div>

@@ -5,17 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import ThemeToggle from './ThemeToggle';
 
-const navItems = [
-        { name: 'About', href: '#about' },
-        { name: 'Hobbies', href: '#hobbies' },
-        { name: 'Music', href: '#music' },
-        { name: 'Books', href: '#books' },
-        { name: 'Contact', href: '#contact' },
-];
-
 export default function Navbar() {
         const [isScrolled, setIsScrolled] = useState(false);
         const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+        const [currentSection, setCurrentSection] = useState('');
 
         // Handle scroll effect
         useEffect(() => {
@@ -56,21 +49,27 @@ export default function Navbar() {
 
                                         {/* Desktop Navigation */}
                                         <div className="hidden md:flex items-center space-x-6">
-                                                {navItems.map((item, index) => (
-                                                        <motion.div
-                                                                key={item.name}
-                                                                initial={{ opacity: 0, y: -20 }}
-                                                                animate={{ opacity: 1, y: 0 }}
-                                                                transition={{ duration: 0.3, delay: 0.1 * index }}
-                                                        >
-                                                                <Link
-                                                                        href={item.href}
-                                                                        className="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark transition-colors px-2 py-1 rounded-md text-sm font-medium"
+                                                {/* Main navigation */}
+                                                <div className="hidden md:flex space-x-8">
+                                                        {[
+                                                                ['Home', '/'],
+                                                                ['About', '/#about'],
+                                                                ['Hobbies', '/#hobbies'],
+                                                                ['Books', '/#books'],
+                                                                ['Music', '/#music'],
+                                                                ['Blog', '/blog'],
+                                                                ['Contact', '/#contact'],
+                                                        ].map(([title, url]) => (
+                                                                <a
+                                                                        key={title}
+                                                                        href={url}
+                                                                        className={`font-medium text-gray-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary-dark transition-colors ${currentSection === title.toLowerCase() ? 'text-primary dark:text-primary-dark' : ''
+                                                                                }`}
                                                                 >
-                                                                        {item.name}
-                                                                </Link>
-                                                        </motion.div>
-                                                ))}
+                                                                        {title}
+                                                                </a>
+                                                        ))}
+                                                </div>
                                                 <div className="pl-2">
                                                         <ThemeToggle />
                                                 </div>
@@ -126,19 +125,27 @@ export default function Navbar() {
                                         >
                                                 <div className="container-custom py-6">
                                                         <div className="flex flex-col space-y-2">
-                                                                {navItems.map((item, index) => (
+                                                                {[
+                                                                        ['Home', '/'],
+                                                                        ['About', '/#about'],
+                                                                        ['Hobbies', '/#hobbies'],
+                                                                        ['Books', '/#books'],
+                                                                        ['Music', '/#music'],
+                                                                        ['Blog', '/blog'],
+                                                                        ['Contact', '/#contact'],
+                                                                ].map(([title, url], index) => (
                                                                         <motion.div
-                                                                                key={item.name}
+                                                                                key={title}
                                                                                 initial={{ opacity: 0, x: -20 }}
                                                                                 animate={{ opacity: 1, x: 0 }}
                                                                                 transition={{ duration: 0.2, delay: 0.05 * index }}
                                                                         >
                                                                                 <Link
-                                                                                        href={item.href}
+                                                                                        href={url}
                                                                                         className="block py-3 px-4 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                                                                                         onClick={() => setIsMobileMenuOpen(false)}
                                                                                 >
-                                                                                        {item.name}
+                                                                                        {title}
                                                                                 </Link>
                                                                         </motion.div>
                                                                 ))}

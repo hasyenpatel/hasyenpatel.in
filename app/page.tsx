@@ -9,6 +9,7 @@ import About from './components/About';
 import Hobbies from './components/Hobbies';
 import Music from './components/Music';
 import Books from './components/Books';
+import Blog from './components/Blog';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
@@ -21,6 +22,7 @@ export default function Home() {
                         <Hobbies />
                         <Books />
                         <Music />
+                        <Blog />
                         <Contact />
                         <Footer />
                 </div>

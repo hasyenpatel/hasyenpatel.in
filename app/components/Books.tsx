@@ -260,7 +260,7 @@ export default function Books() {
         };
 
         return (
-                <section id="books" className="py-20 bg-white dark:bg-gray-950">
+                <section id="books" className="py-20 bg-white dark:bg-black">
                         <div className="container-custom max-w-6xl">
                                 <motion.div
                                         initial={{ opacity: 0, y: 20 }}
@@ -284,7 +284,7 @@ export default function Books() {
                                                                 placeholder="Search books..."
                                                                 value={searchTerm}
                                                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                                                className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark outline-none transition-all"
+                                                                className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark outline-none transition-all"
                                                         />
                                                         {searchTerm && (
                                                                 <button
@@ -298,14 +298,14 @@ export default function Books() {
                                                         )}
                                                 </div>
 
-                                                {/* Filter buttons similar to Music component */}
-                                                <div className="flex items-center gap-2">
+                                                {/* Improved Filter buttons with pill style */}
+                                                <div className="flex items-center gap-3">
                                                         <span className="text-gray-600 dark:text-gray-400 text-sm whitespace-nowrap">Filter by:</span>
-                                                        <div className="flex rounded-full overflow-hidden shadow-sm">
+                                                        <div className="flex space-x-2">
                                                                 <button
                                                                         onClick={() => setFilterType('all')}
-                                                                        className={`px-4 py-1.5 text-sm font-medium transition-colors ${filterType === 'all'
-                                                                                ? 'bg-primary dark:bg-primary-dark text-white'
+                                                                        className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${filterType === 'all'
+                                                                                ? 'bg-primary dark:bg-primary-dark text-white shadow-md'
                                                                                 : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                                                                                 }`}
                                                                 >
@@ -313,8 +313,8 @@ export default function Books() {
                                                                 </button>
                                                                 <button
                                                                         onClick={() => setFilterType('title')}
-                                                                        className={`px-4 py-1.5 text-sm font-medium transition-colors ${filterType === 'title'
-                                                                                ? 'bg-primary dark:bg-primary-dark text-white'
+                                                                        className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${filterType === 'title'
+                                                                                ? 'bg-primary dark:bg-primary-dark text-white shadow-md'
                                                                                 : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                                                                                 }`}
                                                                 >
@@ -322,8 +322,8 @@ export default function Books() {
                                                                 </button>
                                                                 <button
                                                                         onClick={() => setFilterType('author')}
-                                                                        className={`px-4 py-1.5 text-sm font-medium transition-colors ${filterType === 'author'
-                                                                                ? 'bg-primary dark:bg-primary-dark text-white'
+                                                                        className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${filterType === 'author'
+                                                                                ? 'bg-primary dark:bg-primary-dark text-white shadow-md'
                                                                                 : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                                                                                 }`}
                                                                 >
@@ -370,7 +370,7 @@ export default function Books() {
                                                         initial={{ opacity: 0, scale: 0.9 }}
                                                         animate={{ opacity: 1, scale: 1 }}
                                                         exit={{ opacity: 0, scale: 0.9 }}
-                                                        className="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-md w-full relative"
+                                                        className="bg-white dark:bg-black rounded-xl p-6 max-w-md w-full relative"
                                                 >
                                                         <button
                                                                 onClick={() => setShowSuggestionForm(false)}

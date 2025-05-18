@@ -372,7 +372,7 @@ export default function Music() {
         };
 
         return (
-                <section id="music" className="py-20 bg-white dark:bg-gray-900">
+                <section id="music" className="py-20 bg-white dark:bg-black">
                         <div className="container-custom max-w-6xl">
                                 <motion.div
                                         initial={{ opacity: 0, y: 20 }}
@@ -404,7 +404,7 @@ export default function Music() {
                                                                         value={searchTerm}
                                                                         onChange={(e) => setSearchTerm(e.target.value)}
                                                                         placeholder="Search music..."
-                                                                        className="w-full py-2 px-4 pr-10 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark text-gray-900 dark:text-white"
+                                                                        className="w-full py-2 px-4 pr-10 bg-white dark:bg-black border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark text-gray-900 dark:text-white"
                                                                 />
                                                                 <div className="absolute right-3 top-2.5 text-gray-500 dark:text-gray-400">
                                                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -412,27 +412,27 @@ export default function Music() {
                                                                         </svg>
                                                                 </div>
                                                         </div>
-                                                        <div className="flex gap-2 flex-wrap">
+                                                        <div className="flex gap-3 flex-wrap">
                                                                 <button
                                                                         onClick={() => setFilterType('all')}
-                                                                        className={`px-3 py-1 rounded-full text-xs font-medium ${filterType === 'all'
-                                                                                ? 'bg-primary dark:bg-primary-dark text-white'
+                                                                        className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${filterType === 'all'
+                                                                                ? 'bg-primary dark:bg-primary-dark text-white shadow-md'
                                                                                 : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'}`}
                                                                 >
                                                                         All
                                                                 </button>
                                                                 <button
                                                                         onClick={() => setFilterType('title')}
-                                                                        className={`px-3 py-1 rounded-full text-xs font-medium ${filterType === 'title'
-                                                                                ? 'bg-primary dark:bg-primary-dark text-white'
+                                                                        className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${filterType === 'title'
+                                                                                ? 'bg-primary dark:bg-primary-dark text-white shadow-md'
                                                                                 : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'}`}
                                                                 >
                                                                         Title
                                                                 </button>
                                                                 <button
                                                                         onClick={() => setFilterType('author')}
-                                                                        className={`px-3 py-1 rounded-full text-xs font-medium ${filterType === 'author'
-                                                                                ? 'bg-primary dark:bg-primary-dark text-white'
+                                                                        className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${filterType === 'author'
+                                                                                ? 'bg-primary dark:bg-primary-dark text-white shadow-md'
                                                                                 : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'}`}
                                                                 >
                                                                         Artist
@@ -441,7 +441,7 @@ export default function Music() {
                                                 </div>
 
                                                 {/* Scrollable music grid container */}
-                                                <div className="h-[500px] overflow-y-auto pr-2 custom-scrollbar rounded-lg border border-gray-200 dark:border-gray-700 p-3 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+                                                <div className="h-[500px] overflow-y-auto pr-2 custom-scrollbar rounded-lg border border-gray-200 dark:border-gray-700 p-3 bg-white/50 dark:bg-black backdrop-blur-sm">
                                                         {filteredTracks.length > 0 ? (
                                                                 <div className="grid grid-cols-3 gap-3 auto-rows-max">
                                                                         {filteredTracks.map((track, index) => (
@@ -473,7 +473,7 @@ export default function Music() {
                                                 whileInView={{ opacity: 1, y: 0 }}
                                                 viewport={{ once: true }}
                                                 transition={{ duration: 0.6, delay: 0.2 }}
-                                                className="lg:w-1/2 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-lg"
+                                                className="lg:w-1/2 bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-lg"
                                         >
                                                 {/* YouTube Embed */}
                                                 <div className="relative pb-[56.25%] h-0 overflow-hidden">
@@ -526,7 +526,7 @@ export default function Music() {
                                                                         </div>
                                                                 </div>
 
-                                                                <div className="mt-2 relative h-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full">
+                                                                <div className="mt-2 relative h-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                                                                         <div className="absolute top-0 left-0 h-2 bg-primary dark:bg-primary-dark rounded-full w-[30%]"></div>
                                                                 </div>
 
