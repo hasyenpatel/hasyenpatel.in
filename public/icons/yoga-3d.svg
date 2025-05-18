@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128px" height="128px" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="yogaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#4F46E5" stop-opacity="0.8"/>
+    </linearGradient>
+  </defs>
+  
+  <g>
+    <!-- Background circle -->
+    <circle cx="64" cy="64" r="58" fill="url(#yogaGradient)"/>
+    
+    <!-- Lotus position figure -->
+    <g transform="translate(35, 35) scale(0.5, 0.5)">
+      <!-- Head -->
+      <circle cx="58" cy="30" r="18" fill="#F9FAFB" stroke="#6B7280" stroke-width="2"/>
+      
+      <!-- Body -->
+      <path d="M58,48 L58,78" fill="none" stroke="#F9FAFB" stroke-width="10" stroke-linecap="round"/>
+      
+      <!-- Arms -->
+      <path d="M58,55 C42,45 25,65 25,70" fill="none" stroke="#F9FAFB" stroke-width="6" stroke-linecap="round"/>
+      <path d="M58,55 C74,45 91,65 91,70" fill="none" stroke="#F9FAFB" stroke-width="6" stroke-linecap="round"/>
+      
+      <!-- Legs (lotus position) -->
+      <path d="M43,90 C30,75 46,65 58,78 C70,65 86,75 73,90 Z" fill="#F9FAFB" stroke="#6B7280" stroke-width="2"/>
+    </g>
+    
+    <!-- Om symbol -->
+    <g transform="translate(85, 25) scale(0.2, 0.2)" fill="#F9FAFB">
+      <path d="M67.5,0 C30.3,0 0,30.3 0,67.5 C0,104.7 30.3,135 67.5,135 C104.7,135 135,104.7 135,67.5 C135,30.3 104.7,0 67.5,0 Z M67.5,125 C35.8,125 10,99.2 10,67.5 C10,35.8 35.8,10 67.5,10 C99.2,10 125,35.8 125,67.5 C125,99.2 99.2,125 67.5,125 Z"/>
+      <path d="M88.5,44.5 C88.5,36 81.8,29.2 73.2,29.2 C64.7,29.2 58,36 58,44.5 C58,53 64.7,59.8 73.2,59.8 C81.8,59.8 88.5,53 88.5,44.5 Z"/>
+      <path d="M60.2,67.5 C51.3,67.5 43.2,62.7 38.8,55.3 C43.8,58.2 49.8,59.8 56.2,59.8 C71.8,59.8 84.5,47.2 84.5,31.5 L94.5,31.5 C94.5,52.7 77.3,69.8 56.2,69.8 C49.3,69.8 42.8,68 37.2,64.7 C45,79.8 65.5,85.2 80.5,75.7 L87,83.8 C67.7,97.2 41.8,89.3 31.8,69 C26.8,59.7 27.2,48.7 32,39.7 L40,44.5 C36.5,51.2 36.2,59.2 39.7,66.2 C43.5,73.8 49.7,79 57.2,81.2 C59.2,81.7 60.2,83.5 59.7,85.5 C59.2,87.5 57.3,88.5 55.3,88 C45.5,85.2 37.3,78.3 32.3,68.7 C27.3,58.8 27.5,47.5 32.5,37.8 C37.5,28.2 46.3,21.7 56.3,19.8 C66.5,17.8 76.7,21 84,27.7 C91.3,34.3 95.3,44.3 94.2,54.5 C93,65 87,73.8 78.2,78.7 L71.7,70.5 C77.8,66.8 82,59.7 82.8,51.7 C83.7,44 81.3,36.3 76,30.5 C70.7,25 63.2,22.3 55.5,23.7 C48,25 41.5,30 38,36.7 L30,32 C41.3,20.8 57,16.7 71.3,22.7 C78.5,25.7 84.2,31.2 87.5,38.2 C87.5,38.3 87.5,38.5 87.5,38.7 C82,46.5 71.5,48.7 63.7,43.2 C55.8,37.7 53.7,27.2 59.2,19.3 C64.7,11.5 75.2,9.3 83,14.8 C90.8,20.3 93,30.8 87.5,38.7 Z"/>
+    </g>
+    
+    <!-- Floating particles -->
+    <g>
+      <circle cx="30" cy="100" r="2" fill="#F9FAFB" opacity="0.7">
+        <animate attributeName="cy" values="100;90;100" dur="3s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.7;0.3;0.7" dur="3s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="95" cy="90" r="1.5" fill="#F9FAFB" opacity="0.5">
+        <animate attributeName="cy" values="90;80;90" dur="4s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.5;0.2;0.5" dur="4s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="45" cy="30" r="1" fill="#F9FAFB" opacity="0.6">
+        <animate attributeName="cy" values="30;25;30" dur="2.5s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.6;0.3;0.6" dur="2.5s" repeatCount="indefinite" />
+      </circle>
+    </g>
+  </g>
+</svg> 

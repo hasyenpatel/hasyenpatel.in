@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128px" height="128px" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cookingGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FECACA" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#EF4444" stop-opacity="0.3"/>
+    </linearGradient>
+    <filter id="steamGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
+      <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 1  0 1 0 0 1  0 0 1 0 1  0 0 0 18 -7" result="glow" />
+      <feBlend in="SourceGraphic" in2="glow" mode="normal" />
+    </filter>
+  </defs>
+  
+  <g>
+    <!-- Background -->
+    <circle cx="64" cy="64" r="58" fill="url(#cookingGradient)"/>
+    
+    <!-- Cooking Pot -->
+    <g transform="translate(40, 70)">
+      <!-- Pot base -->
+      <ellipse cx="0" cy="0" rx="32" ry="8" fill="#475569" stroke="#334155" stroke-width="1"/>
+      
+      <!-- Pot body -->
+      <path d="M-32,0 C-32,-25 32,-25 32,0" fill="#64748B" stroke="#475569" stroke-width="1"/>
+      
+      <!-- Pot top -->
+      <ellipse cx="0" cy="-25" rx="32" ry="8" fill="#94A3B8" stroke="#64748B" stroke-width="1"/>
+      
+      <!-- Pot handles -->
+      <path d="M-32,-15 C-40,-15 -40,-5 -32,-5" fill="none" stroke="#334155" stroke-width="3" stroke-linecap="round"/>
+      <path d="M32,-15 C40,-15 40,-5 32,-5" fill="none" stroke="#334155" stroke-width="3" stroke-linecap="round"/>
+      
+      <!-- Pot contents - food that bubbles -->
+      <ellipse cx="0" cy="-25" rx="25" ry="6" fill="#DC2626">
+        <animate attributeName="ry" values="6;5;6" dur="2s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="-10" cy="-25" rx="5" ry="2" fill="#FECACA" opacity="0.7">
+        <animate attributeName="cy" values="-25;-27;-25" dur="1.5s" repeatCount="indefinite"/>
+        <animate attributeName="r" values="2;3;2" dur="1.5s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="8" cy="-25" rx="4" ry="1.5" fill="#FECACA" opacity="0.7">
+        <animate attributeName="cy" values="-25;-28;-25" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+        <animate attributeName="r" values="1.5;2.5;1.5" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+      </ellipse>
+      <ellipse cx="18" cy="-25" rx="3" ry="1" fill="#FECACA" opacity="0.7">
+        <animate attributeName="cy" values="-25;-26;-25" dur="1.8s" repeatCount="indefinite" begin="1s"/>
+        <animate attributeName="r" values="1;2;1" dur="1.8s" repeatCount="indefinite" begin="1s"/>
+      </ellipse>
+    </g>
+    
+    <!-- Steam -->
+    <g filter="url(#steamGlow)" opacity="0.8">
+      <path d="M25,45 C20,35 30,30 25,20" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+        <animate attributeName="d" values="M25,45 C20,35 30,30 25,20;M25,45 C30,35 20,30 25,20;M25,45 C20,35 30,30 25,20" dur="4s" repeatCount="indefinite"/>
+      </path>
+      <path d="M40,45 C35,30 45,25 40,15" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+        <animate attributeName="d" values="M40,45 C35,30 45,25 40,15;M40,45 C45,30 35,25 40,15;M40,45 C35,30 45,25 40,15" dur="5s" repeatCount="indefinite"/>
+      </path>
+      <path d="M55,45 C60,35 50,30 55,20" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+        <animate attributeName="d" values="M55,45 C60,35 50,30 55,20;M55,45 C50,35 60,30 55,20;M55,45 C60,35 50,30 55,20" dur="4.5s" repeatCount="indefinite"/>
+      </path>
+    </g>
+    
+    <!-- Cooking Spoon -->
+    <g transform="translate(80, 40)">
+      <!-- Spoon handle -->
+      <rect x="-5" y="0" width="5" height="30" rx="2" ry="2" fill="#854D0E" stroke="#713F12" stroke-width="0.5"/>
+      
+      <!-- Spoon bowl -->
+      <ellipse cx="0" cy="-5" rx="10" ry="6" fill="#D97706" stroke="#B45309" stroke-width="1"/>
+      <ellipse cx="0" cy="-5" rx="8" ry="4" fill="#FBBF24" stroke="#D97706" stroke-width="0.5"/>
+      
+      <!-- Spoon animation -->
+      <animateTransform
+        attributeName="transform"
+        attributeType="XML"
+        type="rotate"
+        from="-10"
+        to="10"
+        dur="3s"
+        repeatCount="indefinite"
+        additive="sum"/>
+    </g>
+    
+    <!-- Ingredients -->
+    <g transform="translate(20, 35)">
+      <!-- Tomato -->
+      <circle cx="0" cy="0" r="8" fill="#DC2626" stroke="#B91C1C" stroke-width="0.5"/>
+      <path d="M0,-6 C3,-4 3,-4 0,-2" fill="none" stroke="#22C55E" stroke-width="1"/>
+      <circle cx="-2" cy="-2" r="1" fill="#FECACA"/>
+      
+      <!-- Chopping animation -->
+      <g transform="translate(0, 12)">
+        <rect x="-10" y="0" width="20" height="2" rx="1" fill="#64748B" stroke="#475569" stroke-width="0.5"/>
+        <rect x="-15" y="0" width="30" height="0.5" fill="#94A3B8"/>
+        
+        <!-- Knife -->
+        <g>
+          <path d="M-10,-10 L10,0 L10,2 L-10,-8 Z" fill="#E2E8F0" stroke="#CBD5E1" stroke-width="0.5"/>
+          <rect x="-25" y="-10" width="15" height="4" rx="1" fill="#64748B" stroke="#475569" stroke-width="0.5"/>
+          
+          <!-- Knife animation -->
+          <animateTransform
+            attributeName="transform"
+            attributeType="XML"
+            type="rotate"
+            values="0;-20;0"
+            dur="1.5s"
+            repeatCount="indefinite"
+            additive="sum"/>
+        </g>
+      </g>
+    </g>
+    
+    <!-- Herbs -->
+    <g transform="translate(30, 25)">
+      <path d="M0,0 C2,-3 4,-2 5,0" fill="none" stroke="#22C55E" stroke-width="1.5" stroke-linecap="round">
+        <animate attributeName="d" values="M0,0 C2,-3 4,-2 5,0;M0,0 C3,-2 3,-3 5,0;M0,0 C2,-3 4,-2 5,0" dur="5s" repeatCount="indefinite"/>
+      </path>
+      <path d="M2,0 C4,-4 6,-3 7,-1" fill="none" stroke="#16A34A" stroke-width="1.5" stroke-linecap="round">
+        <animate attributeName="d" values="M2,0 C4,-4 6,-3 7,-1;M2,0 C5,-3 5,-4 7,-1;M2,0 C4,-4 6,-3 7,-1" dur="6s" repeatCount="indefinite"/>
+      </path>
+      <path d="M4,0 C6,-3 8,-2 8,0" fill="none" stroke="#15803D" stroke-width="1.5" stroke-linecap="round">
+        <animate attributeName="d" values="M4,0 C6,-3 8,-2 8,0;M4,0 C7,-2 7,-3 8,0;M4,0 C6,-3 8,-2 8,0" dur="4s" repeatCount="indefinite"/>
+      </path>
+    </g>
+  </g>
+</svg> 

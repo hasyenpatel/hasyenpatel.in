@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Camera Body - Main part -->
+  <g transform="translate(10, 25)">
+    <!-- Camera body with shadow and highlights -->
+    <rect x="5" y="5" width="70" height="50" rx="5" ry="5" fill="#1a73e8" />
+    <!-- 3D effect - bottom shadow -->
+    <path d="M5 55 L5 60 L75 60 L75 55 Z" fill="#0d47a1" />
+    <!-- 3D effect - right shadow -->
+    <path d="M75 5 L80 10 L80 60 L75 60 L75 5 Z" fill="#1565c0" />
+    <!-- Camera top - raised part -->
+    <rect x="20" y="0" width="40" height="8" rx="2" ry="2" fill="#1976d2" />
+    <!-- 3D effect for top part -->
+    <path d="M60 0 L65 5 L75 5 L70 0 Z" fill="#1565c0" />
+    <path d="M20 0 L15 5 L5 5 L10 0 Z" fill="#1565c0" />
+    <!-- Lens with 3D effect -->
+    <circle cx="40" cy="30" r="15" fill="#0d47a1" />
+    <circle cx="40" cy="30" r="12" fill="#2196f3" />
+    <circle cx="40" cy="30" r="8" fill="#bbdefb" />
+    <circle cx="37" cy="27" r="3" fill="#ffffff" opacity="0.7" />
+    <!-- Flash -->
+    <rect x="60" y="15" width="10" height="10" rx="2" ry="2" fill="#ffecb3" />
+    <rect x="62" y="17" width="6" height="6" rx="1" ry="1" fill="#fff59d" />
+    <!-- Button on top -->
+    <circle cx="30" cy="4" r="2" fill="#b71c1c" />
+    <!-- Camera strap attachment -->
+    <rect x="0" y="15" width="5" height="10" rx="2" ry="2" fill="#0d47a1" />
+  </g>
+  <!-- Shine effects -->
+  <ellipse cx="35" cy="30" rx="3" ry="2" fill="#ffffff" opacity="0.3" />
+  <ellipse cx="60" cy="60" rx="8" ry="4" fill="#ffffff" opacity="0.2" />
+</svg> 
