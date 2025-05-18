@@ -89,46 +89,46 @@ const allBooks: Book[] = [
 // BookCover – HD Google Books → Open Library → placeholder
 // ────────────────────────────────────────────────────────────
 const BookCover = ({ title, author }: { title: string; author: string }) => {
-  const [src, setSrc] = useState<string | null>(null);
+        const [src, setSrc] = useState<string | null>(null);
 
-  useEffect(() => {
-    let active = true;
-    (async () => {
-      try {
-        const q = encodeURIComponent(`${title} ${author}`);
-        const r = await fetch(
-          `https://www.googleapis.com/books/v1/volumes?q=${q}&maxResults=1`
+        useEffect(() => {
+                let active = true;
+                (async () => {
+                        try {
+                                const q = encodeURIComponent(`${title} ${author}`);
+                                const r = await fetch(
+                                        `https://www.googleapis.com/books/v1/volumes?q=${q}&maxResults=1`
+                                );
+                                const data = await r.json();
+                                const links = data.items?.[0]?.volumeInfo?.imageLinks ?? {};
+                                const hd =
+                                        links.extraLarge || links.large || links.medium || links.thumbnail;
+                                if (active && hd) setSrc(hd.replace('&edge=curl', '')); // cleaner url
+                        } catch {
+                                /* ignore fetch errors */
+                        }
+                })();
+
+                return () => {
+                        active = false;
+                };
+        }, [title, author]);
+
+        const fallback = `https://covers.openlibrary.org/b/title/${encodeURIComponent(
+                title
+        )}-M.jpg`;
+
+        return (
+                <img
+                        src={src || fallback}
+                        alt={`${title} cover`}
+                        className="absolute inset-0 w-full h-full object-cover"
+                        loading="lazy"
+                        onError={(e) => {
+                                (e.target as HTMLImageElement).src = '/cover-placeholder.png';
+                        }}
+                />
         );
-        const data = await r.json();
-        const links = data.items?.[0]?.volumeInfo?.imageLinks ?? {};
-        const hd =
-          links.extraLarge || links.large || links.medium || links.thumbnail;
-        if (active && hd) setSrc(hd.replace('&edge=curl', '')); // cleaner url
-      } catch {
-        /* ignore fetch errors */
-      }
-    })();
-
-    return () => {
-      active = false;
-    };
-  }, [title, author]);
-
-  const fallback = `https://covers.openlibrary.org/b/title/${encodeURIComponent(
-    title
-  )}-M.jpg`;
-
-  return (
-    <img
-      src={src || fallback}
-      alt={`${title} cover`}
-      className="absolute inset-0 w-full h-full object-cover"
-      loading="lazy"
-      onError={(e) => {
-        (e.target as HTMLImageElement).src = '/cover-placeholder.png';
-      }}
-    />
-  );
 };
 
 // Book Tile component for grid layout
@@ -195,80 +195,136 @@ const BookTile = ({
 export default function Books() {
         const [searchTerm, setSearchTerm] = useState('');
         const [filterType, setFilterType] = useState('all'); // 'all', 'title', 'author'
+        const [showSuggestionForm, setShowSuggestionForm] = useState(false);
+        const [suggestion, setSuggestion] = useState({ title: '', author: '', why: '' });
+        const [isSubmitting, setIsSubmitting] = useState(false);
+        const [submitSuccess, setSubmitSuccess] = useState(false);
 
         // Filter books based on search term and filter type
         const filteredBooks = searchTerm
-                ? allBooks.filter(book => {
-                        const titleMatch = book.title.toLowerCase().includes(searchTerm.toLowerCase());
-                        const authorMatch = book.author.toLowerCase().includes(searchTerm.toLowerCase());
-
-                        if (filterType === 'title') return titleMatch;
-                        if (filterType === 'author') return authorMatch;
-                        return titleMatch || authorMatch; // 'all'
+                ? allBooks.filter((book) => {
+                        const term = searchTerm.toLowerCase();
+                        if (filterType === 'all') {
+                                return book.title.toLowerCase().includes(term) || book.author.toLowerCase().includes(term);
+                        } else if (filterType === 'title') {
+                                return book.title.toLowerCase().includes(term);
+                        } else {
+                                return book.author.toLowerCase().includes(term);
+                        }
                 })
                 : allBooks;
 
+        // Handle suggestion input changes
+        const handleSuggestionChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+                const { name, value } = e.target;
+                setSuggestion(prev => ({ ...prev, [name]: value }));
+        };
+
+        // Handle suggestion form submission
+        const handleSuggestionSubmit = async (e: React.FormEvent) => {
+                e.preventDefault();
+                if (!suggestion.title || !suggestion.author) return;
+
+                setIsSubmitting(true);
+                try {
+                        // Send the suggestion data to the contact API endpoint
+                        const res = await fetch('/api/contact', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                        name: 'Book Suggestion',
+                                        email: 'booksuggestion@example.com',
+                                        message: `Book Suggestion:\n\nTitle: ${suggestion.title}\nAuthor: ${suggestion.author}\nReason: ${suggestion.why || 'No reason provided'}`
+                                }),
+                        });
+
+                        if (!res.ok) {
+                                throw new Error('Failed to submit suggestion');
+                        }
+
+                        // Show success message
+                        setSubmitSuccess(true);
+
+                        // Reset form after delay
+                        setTimeout(() => {
+                                setShowSuggestionForm(false);
+                                setSuggestion({ title: '', author: '', why: '' });
+                                setSubmitSuccess(false);
+                        }, 3000);
+                } catch (error) {
+                        console.error('Error submitting book suggestion:', error);
+                        // Could add error state here if needed
+                } finally {
+                        setIsSubmitting(false);
+                }
+        };
+
         return (
-                <section id="books" className="py-20 bg-slate-50 dark:bg-gray-900">
+                <section id="books" className="py-20 bg-white dark:bg-gray-950">
                         <div className="container-custom max-w-6xl">
                                 <motion.div
                                         initial={{ opacity: 0, y: 20 }}
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
-                                        transition={{ duration: 0.6 }}
-                                        className="mb-12"
+                                        transition={{ duration: 0.8 }}
+                                        className="text-center mb-10"
                                 >
-                                        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center font-display text-gray-900 dark:text-white">My Reading Journey</h2>
-                                        <p className="text-center text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                                                Books that have shaped my thinking and broadened my perspective.
+                                        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center font-display text-gray-900 dark:text-white">Books I've Read</h2>
+                                        <p className="text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+                                                A collection of books that have shaped my thinking and knowledge.
                                         </p>
                                 </motion.div>
 
-                                <div className="mx-auto">
-                                        {/* Search and filter controls */}
-                                        <div className="mb-8 max-w-2xl mx-auto">
-                                                <div className="flex flex-col sm:flex-row gap-3">
-                                                        {/* Search input */}
-                                                        <div className="relative flex-1">
-                                                                <input
-                                                                        type="text"
-                                                                        value={searchTerm}
-                                                                        onChange={(e) => setSearchTerm(e.target.value)}
-                                                                        placeholder="Search books..."
-                                                                        className="w-full py-2 px-4 pr-10 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark text-gray-900 dark:text-white"
-                                                                />
-                                                                <div className="absolute right-3 top-2.5 text-gray-500 dark:text-gray-400">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                {/* Search and filter controls */}
+                                <div className="mb-8 flex flex-col md:flex-row items-center gap-4 justify-between">
+                                        <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+                                                <div className="relative w-full md:w-64">
+                                                        <input
+                                                                type="text"
+                                                                placeholder="Search books..."
+                                                                value={searchTerm}
+                                                                onChange={(e) => setSearchTerm(e.target.value)}
+                                                                className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark outline-none transition-all"
+                                                        />
+                                                        {searchTerm && (
+                                                                <button
+                                                                        onClick={() => setSearchTerm('')}
+                                                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                                                                >
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                                                                         </svg>
-                                                                </div>
-                                                        </div>
+                                                                </button>
+                                                        )}
+                                                </div>
 
-                                                        {/* Filter buttons */}
-                                                        <div className="flex gap-2">
+                                                {/* Filter buttons similar to Music component */}
+                                                <div className="flex items-center gap-2">
+                                                        <span className="text-gray-600 dark:text-gray-400 text-sm whitespace-nowrap">Filter by:</span>
+                                                        <div className="flex rounded-full overflow-hidden shadow-sm">
                                                                 <button
                                                                         onClick={() => setFilterType('all')}
-                                                                        className={`px-4 py-2 rounded-md transition-colors ${filterType === 'all'
+                                                                        className={`px-4 py-1.5 text-sm font-medium transition-colors ${filterType === 'all'
                                                                                 ? 'bg-primary dark:bg-primary-dark text-white'
-                                                                                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                                                                                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                                                                                 }`}
                                                                 >
                                                                         All
                                                                 </button>
                                                                 <button
                                                                         onClick={() => setFilterType('title')}
-                                                                        className={`px-4 py-2 rounded-md transition-colors ${filterType === 'title'
+                                                                        className={`px-4 py-1.5 text-sm font-medium transition-colors ${filterType === 'title'
                                                                                 ? 'bg-primary dark:bg-primary-dark text-white'
-                                                                                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                                                                                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                                                                                 }`}
                                                                 >
                                                                         Title
                                                                 </button>
                                                                 <button
                                                                         onClick={() => setFilterType('author')}
-                                                                        className={`px-4 py-2 rounded-md transition-colors ${filterType === 'author'
+                                                                        className={`px-4 py-1.5 text-sm font-medium transition-colors ${filterType === 'author'
                                                                                 ? 'bg-primary dark:bg-primary-dark text-white'
-                                                                                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                                                                                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                                                                                 }`}
                                                                 >
                                                                         Author
@@ -277,60 +333,134 @@ export default function Books() {
                                                 </div>
                                         </div>
 
-                                        {/* Books grid layout */}
-                                        <div className="px-4">
-                                                <div className="h-[500px] overflow-y-auto pr-2 custom-scrollbar">
-                                                        {filteredBooks.length > 0 ? (
-                                                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                                                                        {filteredBooks.map((book, index) => (
-                                                                                <BookTile
-                                                                                        key={`book-${index}`}
-                                                                                        book={book}
-                                                                                        index={index}
-                                                                                />
-                                                                        ))}
-                                                                </div>
-                                                        ) : (
-                                                                <div className="text-center py-10 text-gray-500 dark:text-gray-400">
-                                                                        No books found matching your search.
-                                                                </div>
-                                                        )}
-                                                </div>
-                                        </div>
-
-                                        <div className="text-center mt-6 text-sm text-gray-600 dark:text-gray-400">
-                                                Showing {filteredBooks.length} of {allBooks.length} books
-                                        </div>
+                                        {/* Book suggestion button */}
+                                        <motion.button
+                                                onClick={() => setShowSuggestionForm(true)}
+                                                whileHover={{ scale: 1.05 }}
+                                                whileTap={{ scale: 0.95 }}
+                                                className="px-4 py-2 bg-primary dark:bg-primary-dark text-white rounded-lg hover:shadow-md transition-all duration-300 w-full sm:w-auto"
+                                        >
+                                                <span className="flex items-center justify-center">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+                                                        </svg>
+                                                        Suggest a Book
+                                                </span>
+                                        </motion.button>
                                 </div>
+
+                                {/* Book grid */}
+                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                                        {filteredBooks.map((book, index) => (
+                                                <BookTile key={`${book.title}-${index}`} book={book} index={index} />
+                                        ))}
+                                </div>
+
+                                {/* Show message if no books found */}
+                                {filteredBooks.length === 0 && (
+                                        <div className="text-center py-10">
+                                                <p className="text-gray-600 dark:text-gray-400">No books found matching your search criteria.</p>
+                                        </div>
+                                )}
+
+                                {/* Book suggestion modal */}
+                                {showSuggestionForm && (
+                                        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+                                                <motion.div
+                                                        initial={{ opacity: 0, scale: 0.9 }}
+                                                        animate={{ opacity: 1, scale: 1 }}
+                                                        exit={{ opacity: 0, scale: 0.9 }}
+                                                        className="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-md w-full relative"
+                                                >
+                                                        <button
+                                                                onClick={() => setShowSuggestionForm(false)}
+                                                                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                                                        >
+                                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                                                </svg>
+                                                        </button>
+
+                                                        <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">Suggest a Book</h3>
+
+                                                        {submitSuccess ? (
+                                                                <motion.div
+                                                                        initial={{ opacity: 0 }}
+                                                                        animate={{ opacity: 1 }}
+                                                                        className="bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 p-4 rounded-lg mb-4"
+                                                                >
+                                                                        <p className="font-medium">Thanks for your suggestion!</p>
+                                                                        <p className="text-sm mt-1">I'll definitely check it out.</p>
+                                                                </motion.div>
+                                                        ) : (
+                                                                <form onSubmit={handleSuggestionSubmit}>
+                                                                        <div className="mb-4">
+                                                                                <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300" htmlFor="title">
+                                                                                        Book Title*
+                                                                                </label>
+                                                                                <input
+                                                                                        type="text"
+                                                                                        id="title"
+                                                                                        name="title"
+                                                                                        value={suggestion.title}
+                                                                                        onChange={handleSuggestionChange}
+                                                                                        required
+                                                                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                                                                                />
+                                                                        </div>
+
+                                                                        <div className="mb-4">
+                                                                                <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300" htmlFor="author">
+                                                                                        Author*
+                                                                                </label>
+                                                                                <input
+                                                                                        type="text"
+                                                                                        id="author"
+                                                                                        name="author"
+                                                                                        value={suggestion.author}
+                                                                                        onChange={handleSuggestionChange}
+                                                                                        required
+                                                                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                                                                                />
+                                                                        </div>
+
+                                                                        <div className="mb-6">
+                                                                                <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300" htmlFor="why">
+                                                                                        Why should I read it?
+                                                                                </label>
+                                                                                <textarea
+                                                                                        id="why"
+                                                                                        name="why"
+                                                                                        value={suggestion.why}
+                                                                                        onChange={handleSuggestionChange}
+                                                                                        rows={3}
+                                                                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                                                                                />
+                                                                        </div>
+
+                                                                        <motion.button
+                                                                                type="submit"
+                                                                                whileHover={{ scale: 1.03 }}
+                                                                                whileTap={{ scale: 0.97 }}
+                                                                                className="w-full py-2 px-4 bg-primary dark:bg-primary-dark text-white rounded-lg"
+                                                                                disabled={isSubmitting}
+                                                                        >
+                                                                                {isSubmitting ? (
+                                                                                        <span className="flex items-center justify-center">
+                                                                                                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                                                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                                                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                                                                </svg>
+                                                                                                Submitting...
+                                                                                        </span>
+                                                                                ) : "Submit Suggestion"}
+                                                                        </motion.button>
+                                                                </form>
+                                                        )}
+                                                </motion.div>
+                                        </div>
+                                )}
                         </div>
-
-
-
-                        {/* CSS for custom scrollbar */}
-                        <style jsx global>{`
-                                .custom-scrollbar {
-                                        scrollbar-width: thin;
-                                        scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
-                                }
-                                
-                                .custom-scrollbar::-webkit-scrollbar {
-                                        width: 6px;
-                                }
-                                
-                                .custom-scrollbar::-webkit-scrollbar-track {
-                                        background: transparent;
-                                }
-                                
-                                .custom-scrollbar::-webkit-scrollbar-thumb {
-                                        background-color: rgba(155, 155, 155, 0.5);
-                                        border-radius: 20px;
-                                        border: transparent;
-                                }
-                                
-                                .dark .custom-scrollbar::-webkit-scrollbar-thumb {
-                                        background-color: rgba(200, 200, 200, 0.3);
-                                }
-                        `}</style>
                 </section>
         );
 } 

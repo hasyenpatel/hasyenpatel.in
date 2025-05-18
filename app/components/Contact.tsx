@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Contact() {
         const [formData, setFormData] = useState({
@@ -10,6 +10,8 @@ export default function Contact() {
         const [formStatus, setFormStatus] = useState<null | 'success' | 'error' | 'invalid'>(null);
         const [loading, setLoading] = useState(false);
         const [errorMessage, setErrorMessage] = useState('');
+        // Added state for dice animation
+        const [isRolling, setIsRolling] = useState(false);
 
         // Basic email validation
         const isValidEmail = (email: string) => {
@@ -104,19 +106,84 @@ export default function Contact() {
                 "What's the best meal you've ever had and where was it?",
                 "If you could time travel, would you visit the past or the future?",
                 "What's a hobby you've always wanted to pick up but haven't yet?",
-                "What’s something you learned recently that surprised you?",
+                "What's something you learned recently that surprised you?",
                 "If you could star in any movie genre, which would you choose?",
                 "What's the most unusual thing on your bucket list?",
                 "How do you like to unwind after a long day?",
                 "If animals could talk, which would you choose as a conversation partner?",
-                "What’s the last TV show you binge-watched?",
-                "What's a random fact that always amazes you?"
+                "What's the last TV show you binge-watched?",
+                "What's a random fact that always amazes you?",
+                "If you could master any musical instrument instantly, which would you choose?",
+                "What's one place you've never been to but would love to visit?",
+                "If you could have dinner with any historical figure, who would it be?",
+                "What's your favorite way to stay active?",
+                "If you could speak any language fluently, which would you choose?",
+                "What's a childhood memory that still makes you smile?",
+                "If you could solve one global problem, which would you choose?",
+                "What's the most interesting documentary you've watched?",
+                "If you could revive any discontinued product, what would it be?",
+                "What's a small luxury that always makes your day better?",
+                "If you could be an expert in any field overnight, what would you choose?",
+                "What's your favorite way to connect with nature?",
+                "If you could witness any event in history, what would it be?",
+                "What's a skill you've learned that surprised you with its usefulness?",
+                "If you could design your perfect day, what would it include?",
+                "What's a piece of technology that changed your life?",
+                "If you could create a new holiday, what would it celebrate?",
+                "What's something you collect and why?",
+                "If you could instantly become an expert at any sport, which would you choose?",
+                "What's a tradition you'd like to start or maintain?"
         ];
-        const [icebreaker, setIcebreaker] = useState(
-                icebreakers[Math.floor(Math.random() * icebreakers.length)]
-        );
-        const nextIcebreaker = () => {
+        const [icebreaker, setIcebreaker] = useState("What's something interesting you'd like to chat about?");
+
+        // Use useEffect to set the random icebreaker on the client side only to avoid hydration mismatch
+        useEffect(() => {
+                // Only run on the client side after hydration
                 setIcebreaker(icebreakers[Math.floor(Math.random() * icebreakers.length)]);
+        }, []);
+
+        // Dice roll animation for icebreaker with improved visuals
+        const rollDiceForIcebreaker = () => {
+                if (isRolling) return;
+
+                setIsRolling(true);
+
+                // Set a fixed number of iterations instead of time-based animation
+                const iterations = 15;
+                let currentIteration = 0;
+                const initialInterval = 50; // Start with very fast rolls
+                const finalSlowInterval = 300; // End with slower rolls
+
+                const roll = () => {
+                        // Increment the current iteration
+                        currentIteration++;
+
+                        // Pick a random icebreaker during animation
+                        setIcebreaker(icebreakers[Math.floor(Math.random() * icebreakers.length)]);
+
+                        // If we've completed all iterations, stop and show final result
+                        if (currentIteration >= iterations) {
+                                // Final choice after animation completes
+                                let finalIcebreaker;
+                                do {
+                                        finalIcebreaker = icebreakers[Math.floor(Math.random() * icebreakers.length)];
+                                } while (finalIcebreaker === icebreaker);
+
+                                setIcebreaker(finalIcebreaker);
+                                setIsRolling(false);
+                                return;
+                        }
+
+                        // Calculate dynamic interval based on progress (slow down gradually)
+                        const progress = currentIteration / iterations; // 0 to 1
+                        const currentInterval = initialInterval + (progress * (finalSlowInterval - initialInterval));
+
+                        // Continue rolling with adjusted timing
+                        setTimeout(roll, currentInterval);
+                };
+
+                // Start the rolling process
+                roll();
         };
 
         return (
@@ -149,7 +216,7 @@ export default function Contact() {
                                                 <div className="mb-6">
                                                         <p className="text-gray-600 dark:text-gray-400 mb-6">
                                                                 Curious to know more about me?
-                                                        Let's connect on social media or send me a message!
+                                                                Let's connect on social media or send me a message!
                                                         </p>
 
                                                         <div className="flex flex-wrap gap-4 mb-8">
@@ -173,20 +240,58 @@ export default function Contact() {
                                                         </div>
                                                 </div>
 
-                                                {/* Availability Info */}
+                                                {/* Conversation Dice */}
                                                 <div className="p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50 mb-6 min-h-[150px]">
-                                                        <h4 className="font-semibold text-gray-900 dark:text-white mb-2">
-                                                                Daily Icebreaker
+                                                        <h4 className="font-semibold text-gray-900 dark:text-white mb-2 flex items-center justify-between">
+                                                                <span>Conversation Dice <span className="text-sm text-gray-500">🎲</span></span>
+                                                                {isRolling && (
+                                                                        <motion.span
+                                                                                className="text-xs bg-primary/20 text-primary-dark px-2 py-1 rounded-full"
+                                                                                animate={{ opacity: [0.5, 1, 0.5] }}
+                                                                                transition={{ repeat: Infinity, duration: 0.8 }}
+                                                                        >
+                                                                                Rolling...
+                                                                        </motion.span>
+                                                                )}
                                                         </h4>
-                                                        <p className="text-gray-600 dark:text-gray-400 italic">
-                                                                {icebreaker}
-                                                        </p>
-                                                        <button
-                                                                onClick={nextIcebreaker}
-                                                                className="mt-4 px-3 py-1 bg-primary text-white rounded-lg hover:bg-opacity-90 transition"
+
+                                                        <AnimatePresence mode="wait">
+                                                                <motion.div
+                                                                        key={icebreaker}
+                                                                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                                                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                                                                        exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                                                                        transition={{ duration: 0.4, ease: "easeOut" }}
+                                                                        className={`p-3 rounded-md ${isRolling ? 'bg-primary/5 dark:bg-primary-dark/10' : ''}`}
+                                                                >
+                                                                        <p className="text-gray-600 dark:text-gray-400 italic">
+                                                                                {icebreaker}
+                                                                        </p>
+                                                                </motion.div>
+                                                        </AnimatePresence>
+
+                                                        <motion.button
+                                                                onClick={rollDiceForIcebreaker}
+                                                                className="mt-4 px-3 py-1 bg-primary text-white rounded-lg hover:bg-opacity-90 transition flex items-center gap-2"
+                                                                whileHover={{ scale: 1.05, boxShadow: "0px 3px 8px rgba(0, 0, 0, 0.15)" }}
+                                                                whileTap={{ scale: 0.95, rotate: 10 }}
+                                                                disabled={isRolling}
                                                         >
-                                                                Another one
-                                                        </button>
+                                                                <motion.span
+                                                                        animate={isRolling ? {
+                                                                                rotate: 360,
+                                                                                scale: [1, 1.2, 1]
+                                                                        } : { rotate: 0, scale: 1 }}
+                                                                        transition={{
+                                                                                rotate: isRolling ? { repeat: Infinity, duration: 0.5, ease: "linear" } : { duration: 0 },
+                                                                                scale: isRolling ? { repeat: Infinity, duration: 0.8 } : { duration: 0 }
+                                                                        }}
+                                                                        className="text-lg"
+                                                                >
+                                                                        🎲
+                                                                </motion.span>
+                                                                {isRolling ? "Rolling..." : "Roll the dice!"}
+                                                        </motion.button>
                                                 </div>
                                         </motion.div>
 

@@ -19,8 +19,8 @@ export default function Home() {
                         <Hero />
                         <About />
                         <Hobbies />
-                        <Music />
                         <Books />
+                        <Music />
                         <Contact />
                         <Footer />
                 </div>

@@ -16,15 +16,11 @@ const AnimatedIcon = ({
 }) => (
         <motion.div
                 className={`relative w-24 h-24 flex items-center justify-center ${color} rounded-2xl shadow-lg overflow-hidden`}
-                initial={{ rotateX: 15, rotateY: -15, rotateZ: 0 }}
-                animate={{ rotateX: [15, -15, 15], rotateY: [-15, 15, -15] }}
-                transition={{
-                        duration: 12,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                }}
+                initial={{ rotateX: 0, rotateY: 0, rotateZ: 0 }}
                 whileHover={{
                         scale: 1.15,
+                        rotateX: 15,
+                        rotateY: -15,
                         rotateZ: 5,
                         transition: { type: "spring", stiffness: 200, damping: 15 },
                 }}
@@ -47,45 +43,6 @@ const AnimatedIcon = ({
         </motion.div>
 );
 
-// Video icon component for video-based icons like astronomy
-const VideoIcon = ({
-        videoPath,
-        alt,
-        color,
-}: {
-        videoPath: string;
-        alt: string;
-        color: string;
-}) => (
-        <motion.div
-                className={`relative w-24 h-24 flex items-center justify-center ${color} rounded-2xl shadow-lg overflow-hidden`}
-                whileHover={{
-                        scale: 1.15,
-                        rotateZ: 5,
-                        transition: { type: "spring", stiffness: 200, damping: 15 },
-                }}
-                style={{ perspective: 800 }}
-        >
-                <motion.div
-                        className="w-full h-full"
-                        whileHover={{
-                                rotate: 5,
-                        }}
-                        transition={{ type: "spring", stiffness: 120, damping: 12 }}
-                >
-                        <video
-                                src={videoPath}
-                                className="w-full h-full object-cover"
-                                autoPlay
-                                loop
-                                muted
-                                playsInline
-                                aria-label={alt}
-                        />
-                </motion.div>
-        </motion.div>
-);
-
 // Hobby data with 3D icon paths
 const hobbies = [
         {
@@ -95,8 +52,7 @@ const hobbies = [
                 textColor: 'text-emerald-600 dark:text-emerald-400',
                 borderColor: 'border-emerald-200 dark:border-emerald-800',
                 iconPath: '/icons/book-3d.svg',
-                iconAlt: 'Book 3D icon',
-                iconType: 'svg'
+                iconAlt: 'Book 3D icon'
         },
         {
                 title: 'Tennis',
@@ -105,8 +61,7 @@ const hobbies = [
                 textColor: 'text-green-600 dark:text-green-400',
                 borderColor: 'border-green-200 dark:border-green-800',
                 iconPath: '/icons/tennis-3d.svg',
-                iconAlt: 'Tennis 3D icon',
-                iconType: 'svg'
+                iconAlt: 'Tennis 3D icon'
         },
         {
                 title: 'Table Tennis',
@@ -115,8 +70,7 @@ const hobbies = [
                 textColor: 'text-orange-600 dark:text-orange-400',
                 borderColor: 'border-orange-200 dark:border-orange-800',
                 iconPath: '/icons/table-tennis-3d.svg',
-                iconAlt: 'Table Tennis 3D icon',
-                iconType: 'svg'
+                iconAlt: 'Table Tennis 3D icon'
         },
         {
                 title: 'Swimming',
@@ -125,18 +79,7 @@ const hobbies = [
                 textColor: 'text-blue-600 dark:text-blue-400',
                 borderColor: 'border-blue-200 dark:border-blue-800',
                 iconPath: '/icons/swimming-3d.svg',
-                iconAlt: 'Swimming 3D icon',
-                iconType: 'svg'
-        },
-        {
-                title: 'Skiing',
-                description: 'Gliding down snowy slopes and experiencing the thrill of alpine adventures.',
-                color: 'bg-sky-50 dark:bg-sky-900/20',
-                textColor: 'text-sky-600 dark:text-sky-400',
-                borderColor: 'border-sky-200 dark:border-sky-800',
-                iconPath: '/icons/skiing-3d.svg',
-                iconAlt: 'Skiing 3D icon',
-                iconType: 'svg'
+                iconAlt: 'Swimming 3D icon'
         },
         {
                 title: 'Yoga & Meditation',
@@ -145,8 +88,7 @@ const hobbies = [
                 textColor: 'text-indigo-600 dark:text-indigo-400',
                 borderColor: 'border-indigo-200 dark:border-indigo-800',
                 iconPath: '/icons/yoga-3d.svg',
-                iconAlt: 'Yoga 3D icon',
-                iconType: 'svg'
+                iconAlt: 'Yoga 3D icon'
         },
         {
                 title: 'Astronomy',
@@ -154,9 +96,8 @@ const hobbies = [
                 color: 'bg-purple-50 dark:bg-purple-900/20',
                 textColor: 'text-purple-600 dark:text-purple-400',
                 borderColor: 'border-purple-200 dark:border-purple-800',
-                iconPath: '/videos/astronomy-motion.mp4',
-                iconAlt: 'Astronomy motion video',
-                iconType: 'video'
+                iconPath: '/icons/astronomy-3d.svg',
+                iconAlt: 'Astronomy 3D icon'
         },
         {
                 title: 'Cycling',
@@ -165,8 +106,7 @@ const hobbies = [
                 textColor: 'text-cyan-600 dark:text-cyan-400',
                 borderColor: 'border-cyan-200 dark:border-cyan-800',
                 iconPath: '/icons/cycling-3d.svg',
-                iconAlt: 'Cycling 3D icon',
-                iconType: 'svg'
+                iconAlt: 'Cycling 3D icon'
         },
         {
                 title: 'Cricket',
@@ -175,8 +115,7 @@ const hobbies = [
                 textColor: 'text-rose-600 dark:text-rose-400',
                 borderColor: 'border-rose-200 dark:border-rose-800',
                 iconPath: '/icons/cricket-3d.svg',
-                iconAlt: 'Cricket 3D icon',
-                iconType: 'svg'
+                iconAlt: 'Cricket 3D icon'
         },
         {
                 title: 'Hiking',
@@ -185,8 +124,16 @@ const hobbies = [
                 textColor: 'text-amber-600 dark:text-amber-400',
                 borderColor: 'border-amber-200 dark:border-amber-800',
                 iconPath: '/icons/hiking-3d.svg',
-                iconAlt: 'Hiking 3D icon',
-                iconType: 'svg'
+                iconAlt: 'Hiking 3D icon'
+        },
+        {
+                title: 'Skiing',
+                description: 'Gliding down snowy slopes and enjoying the thrill of winter mountain adventures.',
+                color: 'bg-sky-50 dark:bg-sky-900/20',
+                textColor: 'text-sky-600 dark:text-sky-400',
+                borderColor: 'border-sky-200 dark:border-sky-800',
+                iconPath: '/icons/skiing-3d.svg',
+                iconAlt: 'Skiing 3D icon'
         },
         {
                 title: 'Travel',
@@ -195,8 +142,7 @@ const hobbies = [
                 textColor: 'text-teal-600 dark:text-teal-400',
                 borderColor: 'border-teal-200 dark:border-teal-800',
                 iconPath: '/icons/travel-3d.svg',
-                iconAlt: 'Travel 3D icon',
-                iconType: 'svg'
+                iconAlt: 'Travel 3D icon'
         },
         {
                 title: 'Cooking',
@@ -205,8 +151,7 @@ const hobbies = [
                 textColor: 'text-red-600 dark:text-red-400',
                 borderColor: 'border-red-200 dark:border-red-800',
                 iconPath: '/icons/cooking-3d.svg',
-                iconAlt: 'Cooking 3D icon',
-                iconType: 'svg'
+                iconAlt: 'Cooking 3D icon'
         },
 ];
 
@@ -227,7 +172,7 @@ export default function Hobbies() {
                                         </p>
                                 </motion.div>
 
-                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
                                         {hobbies.map((hobby, index) => (
                                                 <motion.div
                                                         key={hobby.title}
@@ -239,40 +184,23 @@ export default function Hobbies() {
                                                                 y: -5,
                                                                 boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)"
                                                         }}
-                                                        className={`bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border ${hobby.borderColor} transition-all duration-300`}
+                                                        className={`bg-white dark:bg-gray-800 rounded-xl p-3 sm:p-6 shadow-sm border ${hobby.borderColor} transition-all duration-300`}
                                                 >
-                                                        <div className="flex justify-center mb-4">
-                                                                {hobby.iconType === 'video' ? (
-                                                                        <VideoIcon
-                                                                                videoPath={hobby.iconPath}
-                                                                                alt={hobby.iconAlt}
-                                                                                color={hobby.color}
-                                                                        />
-                                                                ) : (
+                                                        <div className="flex justify-center mb-2 sm:mb-4">
+                                                                <div className="scale-75 sm:scale-100">
                                                                         <AnimatedIcon
                                                                                 iconPath={hobby.iconPath}
                                                                                 alt={hobby.iconAlt}
                                                                                 color={hobby.color}
                                                                         />
-                                                                )}
+                                                                </div>
                                                         </div>
 
-                                                        <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white text-center">{hobby.title}</h3>
-                                                        <p className="text-gray-600 dark:text-gray-400 text-center">{hobby.description}</p>
+                                                        <h3 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2 text-gray-900 dark:text-white text-center">{hobby.title}</h3>
+                                                        <p className="text-gray-600 dark:text-gray-400 text-center text-sm sm:text-base">{hobby.description}</p>
                                                 </motion.div>
                                         ))}
                                 </div>
-
-                                {/* "Bookshelf" inspired illustration */}
-                                <motion.div
-                                        initial={{ opacity: 0 }}
-                                        whileInView={{ opacity: 1 }}
-                                        viewport={{ once: true }}
-                                        transition={{ duration: 0.8, delay: 0.5 }}
-                                        className="mt-16 flex justify-center"
-                                >
-                                        <div className="w-full max-w-3xl h-6 bg-gradient-to-r from-amber-600/20 to-amber-800/20 dark:from-amber-800/30 dark:to-amber-900/30 rounded-t-lg"></div>
-                                </motion.div>
                         </div>
                 </section>
         );

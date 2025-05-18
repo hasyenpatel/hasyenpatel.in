@@ -58,15 +58,15 @@ export default function ThemeToggle() {
         if (!mounted) return null;
 
         return (
-                <div className="relative z-50 flex items-center space-x-2 p-2 rounded-full bg-gray-100 dark:bg-gray-800 shadow-md">
+                <div className="relative z-50 flex items-center space-x-1 md:space-x-2 p-1 md:p-2 rounded-full bg-gray-100 dark:bg-gray-800 shadow-md">
                         <button
                                 aria-label="Light mode"
-                                className={`p-2 rounded-full transition-colors ${theme === 'light' ? 'bg-white shadow-sm text-primary' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'}`}
+                                className={`p-1 md:p-2 rounded-full transition-colors ${theme === 'light' ? 'bg-white shadow-sm text-primary' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'}`}
                                 onClick={() => handleThemeChange('light')}
                         >
                                 <motion.svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        className="h-5 w-5"
+                                        className="h-4 w-4 md:h-5 md:w-5"
                                         viewBox="0 0 20 20"
                                         fill="currentColor"
                                         initial={{ scale: 1 }}
@@ -79,12 +79,12 @@ export default function ThemeToggle() {
 
                         <button
                                 aria-label="Dark mode"
-                                className={`p-2 rounded-full transition-colors ${theme === 'dark' ? 'bg-gray-700 shadow-sm text-primary-dark' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'}`}
+                                className={`p-1 md:p-2 rounded-full transition-colors ${theme === 'dark' ? 'bg-gray-700 shadow-sm text-primary-dark' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'}`}
                                 onClick={() => handleThemeChange('dark')}
                         >
                                 <motion.svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        className="h-5 w-5"
+                                        className="h-4 w-4 md:h-5 md:w-5"
                                         viewBox="0 0 20 20"
                                         fill="currentColor"
                                         initial={{ scale: 1, rotate: 0 }}
@@ -100,12 +100,12 @@ export default function ThemeToggle() {
 
                         <button
                                 aria-label="System theme"
-                                className={`p-2 rounded-full transition-colors ${theme === 'system' ? 'bg-gray-200 dark:bg-gray-600 shadow-sm text-primary dark:text-primary-dark' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'}`}
+                                className={`p-1 md:p-2 rounded-full transition-colors ${theme === 'system' ? 'bg-gray-200 dark:bg-gray-600 shadow-sm text-primary dark:text-primary-dark' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'}`}
                                 onClick={() => handleThemeChange('system')}
                         >
                                 <motion.svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        className="h-5 w-5"
+                                        className="h-4 w-4 md:h-5 md:w-5"
                                         viewBox="0 0 20 20"
                                         fill="currentColor"
                                         initial={{ scale: 1 }}
