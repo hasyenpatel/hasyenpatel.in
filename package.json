@@ -1,4 +1,9 @@
 {
+   https://hasyenpatel.github.io/hasyenpatel.in/
+
+}
+
+{
   "name": "hasyenpatel.in",
   "version": "1.0.0",
   "description": "Personal website for Hasyen Patel",
@@ -7,6 +12,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "export": "next export",
     "lint": "next lint"
   },
   "keywords": [],
