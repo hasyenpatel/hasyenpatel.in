@@ -268,6 +268,7 @@ const TrackTile = ({
                                         src={`https://img.youtube.com/vi/${track.youtubeId}/hqdefault.jpg`}
                                         alt={`${track.title} by ${track.artist}`}
                                         className="w-full h-full object-cover"
+                                        loading="lazy"
                                 />
                         )}
 
@@ -275,15 +276,15 @@ const TrackTile = ({
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-80"></div>
 
                         {/* Track info */}
-                        <div className="absolute bottom-0 left-0 right-0 p-2 text-white">
-                                <h3 className="font-bold text-sm truncate">{track.title}</h3>
-                                <p className="text-xs text-white/80 truncate">{track.artist}</p>
+                        <div className="absolute bottom-0 left-0 right-0 p-1.5 xs:p-2 sm:p-3 text-white">
+                                <h3 className="font-bold text-xs xs:text-sm truncate">{track.title}</h3>
+                                <p className="text-[10px] xs:text-xs text-white/80 truncate">{track.artist}</p>
                         </div>
 
                         {/* Play indicator */}
                         {isActive && (
-                                <div className="absolute top-2 right-2 w-8 h-8 bg-primary dark:bg-primary-dark rounded-full flex items-center justify-center shadow-lg">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-white">
+                                <div className="absolute top-1.5 xs:top-2 right-1.5 xs:right-2 w-6 h-6 sm:w-8 sm:h-8 bg-primary dark:bg-primary-dark rounded-full flex items-center justify-center shadow-lg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3 sm:w-4 sm:h-4 text-white">
                                                 <path d="M8 5.14v14l11-7-11-7z" />
                                         </svg>
                                 </div>
@@ -379,7 +380,7 @@ export default function Music() {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
                                         transition={{ duration: 0.8 }}
-                                        className="text-center mb-12"
+                                        className="text-center mb-16"
                                 >
                                         <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center font-display text-gray-900 dark:text-white">My Music Vibes</h2>
                                         <p className="text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
@@ -387,63 +388,74 @@ export default function Music() {
                                         </p>
                                 </motion.div>
 
-                                <div className="flex flex-col lg:flex-row gap-8">
+                                <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
                                         {/* Music Grid Section */}
                                         <motion.div
                                                 initial={{ opacity: 0, y: 20 }}
                                                 whileInView={{ opacity: 1, y: 0 }}
                                                 viewport={{ once: true }}
                                                 transition={{ duration: 0.6 }}
-                                                className="lg:w-1/2"
+                                                className="w-full lg:w-3/5 lg:pr-4"
                                         >
-                                                {/* Search + Filter */}
-                                                <div className="mb-6 flex flex-col sm:flex-row gap-4">
-                                                        <div className="relative flex-1">
-                                                                <input
-                                                                        type="text"
-                                                                        value={searchTerm}
-                                                                        onChange={(e) => setSearchTerm(e.target.value)}
-                                                                        placeholder="Search music..."
-                                                                        className="w-full py-2 px-4 pr-10 bg-white dark:bg-black border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark text-gray-900 dark:text-white"
-                                                                />
-                                                                <div className="absolute right-3 top-2.5 text-gray-500 dark:text-gray-400">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                                                        </svg>
+                                                {/* Search and filter controls */}
+                                                <div className="mb-6 sm:mb-8 flex flex-col md:flex-row items-center gap-4 justify-between">
+                                                        <div className="flex flex-col sm:flex-row gap-4 w-full">
+                                                                <div className="relative w-full md:w-64">
+                                                                        <input
+                                                                                type="text"
+                                                                                placeholder="Search music..."
+                                                                                value={searchTerm}
+                                                                                onChange={(e) => setSearchTerm(e.target.value)}
+                                                                                className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark outline-none transition-all"
+                                                                        />
+                                                                        {searchTerm && (
+                                                                                <button
+                                                                                        onClick={() => setSearchTerm('')}
+                                                                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                                                                                >
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                                                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                                                                                        </svg>
+                                                                                </button>
+                                                                        )}
                                                                 </div>
-                                                        </div>
-                                                        <div className="flex gap-3 flex-wrap">
-                                                                <button
-                                                                        onClick={() => setFilterType('all')}
-                                                                        className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${filterType === 'all'
-                                                                                ? 'bg-primary dark:bg-primary-dark text-white shadow-md'
-                                                                                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'}`}
-                                                                >
-                                                                        All
-                                                                </button>
-                                                                <button
-                                                                        onClick={() => setFilterType('title')}
-                                                                        className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${filterType === 'title'
-                                                                                ? 'bg-primary dark:bg-primary-dark text-white shadow-md'
-                                                                                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'}`}
-                                                                >
-                                                                        Title
-                                                                </button>
-                                                                <button
-                                                                        onClick={() => setFilterType('author')}
-                                                                        className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${filterType === 'author'
-                                                                                ? 'bg-primary dark:bg-primary-dark text-white shadow-md'
-                                                                                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'}`}
-                                                                >
-                                                                        Artist
-                                                                </button>
+
+                                                                <div className="flex space-x-2 overflow-x-auto no-scrollbar pb-1">
+                                                                        <button
+                                                                                onClick={() => setFilterType('all')}
+                                                                                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap ${filterType === 'all'
+                                                                                        ? 'bg-primary dark:bg-primary-dark text-white shadow-md'
+                                                                                        : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                                                                                        }`}
+                                                                        >
+                                                                                All
+                                                                        </button>
+                                                                        <button
+                                                                                onClick={() => setFilterType('title')}
+                                                                                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap ${filterType === 'title'
+                                                                                        ? 'bg-primary dark:bg-primary-dark text-white shadow-md'
+                                                                                        : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                                                                                        }`}
+                                                                        >
+                                                                                Title
+                                                                        </button>
+                                                                        <button
+                                                                                onClick={() => setFilterType('author')}
+                                                                                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap ${filterType === 'author'
+                                                                                        ? 'bg-primary dark:bg-primary-dark text-white shadow-md'
+                                                                                        : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                                                                                        }`}
+                                                                        >
+                                                                                Artist
+                                                                        </button>
+                                                                </div>
                                                         </div>
                                                 </div>
 
-                                                {/* Scrollable music grid container */}
-                                                <div className="h-[500px] overflow-y-auto pr-2 custom-scrollbar rounded-lg border border-gray-200 dark:border-gray-700 p-3 bg-white/50 dark:bg-black backdrop-blur-sm">
+                                                {/* Scrollable music grid container with adjusted height for mobile */}
+                                                <div className="h-[350px] sm:h-[400px] md:h-[500px] overflow-y-auto pr-2 custom-scrollbar rounded-lg border border-gray-200 dark:border-gray-700 p-3 bg-white/50 dark:bg-black/50 backdrop-blur-sm">
                                                         {filteredTracks.length > 0 ? (
-                                                                <div className="grid grid-cols-3 gap-3 auto-rows-max">
+                                                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 auto-rows-max">
                                                                         {filteredTracks.map((track, index) => (
                                                                                 <TrackTile
                                                                                         key={track.id}
@@ -473,10 +485,10 @@ export default function Music() {
                                                 whileInView={{ opacity: 1, y: 0 }}
                                                 viewport={{ once: true }}
                                                 transition={{ duration: 0.6, delay: 0.2 }}
-                                                className="lg:w-1/2 bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-lg"
+                                                className="w-full lg:w-2/5 bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-lg self-start mt-6 lg:mt-32 max-w-full lg:mx-0"
                                         >
-                                                {/* YouTube Embed */}
-                                                <div className="relative pb-[56.25%] h-0 overflow-hidden">
+                                                {/* YouTube Embed with adjusted ratio for smaller width */}
+                                                <div className="relative pb-[56.25%] sm:pb-[52%] h-0 overflow-hidden border-b border-gray-200 dark:border-gray-700">
                                                         <iframe
                                                                 ref={youtubePlayerRef}
                                                                 src={`https://www.youtube.com/embed/${activeTrack.youtubeId}?enablejsapi=1`}
@@ -488,76 +500,61 @@ export default function Music() {
                                                         ></iframe>
                                                 </div>
 
-                                                {/* Player Controls - Improved for mobile */}
-                                                <div className="p-4 sm:p-6">
-                                                        <div className="flex items-center gap-4 mb-4">
+                                                {/* Player Controls - Clean, modern design */}
+                                                <div className="p-3 sm:p-4 md:p-5">
+                                                        {/* Album info and progress */}
+                                                        <div className="mb-3 sm:mb-4 md:mb-6">
+                                                                <div className="flex items-center mb-1.5">
+                                                                        <span className="text-gray-500 dark:text-gray-400 text-xs mr-2">Album:</span>
+                                                                        <span className="text-gray-700 dark:text-gray-300 text-xs font-medium">{activeTrack.album}</span>
+                                                                        <div className="ml-auto flex items-center">
+                                                                                <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-indigo-500 flex items-center justify-center mr-1.5 sm:mr-2">
+                                                                                        <div className="w-1 h-1 bg-white rounded-full"></div>
+                                                                                </div>
+                                                                                <span className="text-gray-700 dark:text-gray-300 text-xs font-medium">{activeTrack.duration}</span>
+                                                                        </div>
+                                                                </div>
+
+                                                                {/* Progress bar */}
+                                                                <div className="relative h-1.5 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                                                        <div className="absolute top-0 left-0 h-1.5 bg-indigo-500 rounded-full w-[35%]"></div>
+                                                                </div>
+                                                        </div>
+
+                                                        {/* Song info */}
+                                                        <div className="text-center mb-4 sm:mb-5 md:mb-8">
+                                                                <h3 className="text-lg xs:text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-0.5 sm:mb-1">{activeTrack.title}</h3>
+                                                                <p className="text-xs xs:text-sm text-gray-600 dark:text-gray-400">{activeTrack.artist}</p>
+                                                        </div>
+
+                                                        {/* Controls */}
+                                                        <div className="flex justify-center items-center space-x-4 sm:space-x-6 md:space-x-10">
+                                                                <button className="text-gray-400 dark:text-gray-500 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8">
+                                                                                <path d="M9.195 18.44c1.25.713 2.805-.19 2.805-1.629v-2.34l6.945 3.968c1.25.714 2.805-.188 2.805-1.628V8.688c0-1.44-1.555-2.342-2.805-1.628L12 11.03v-2.34c0-1.44-1.555-2.343-2.805-1.629l-7.108 4.062c-1.26.72-1.26 2.536 0 3.256l7.108 4.061z" />
+                                                                        </svg>
+                                                                </button>
+
                                                                 <button
                                                                         onClick={togglePlay}
-                                                                        className="p-4 bg-primary dark:bg-primary-dark text-white rounded-full hover:bg-primary-dark dark:hover:bg-primary transition-all duration-200 flex items-center justify-center flex-shrink-0 shadow-md"
-                                                                        aria-label={isPlaying ? "Pause" : "Play"}
+                                                                        className="w-10 h-10 xs:w-12 xs:h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-indigo-500 rounded-full flex items-center justify-center shadow-lg hover:bg-indigo-600 transition-colors focus:outline-none"
                                                                 >
                                                                         {isPlaying ? (
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="w-5 h-5 xs:w-6 xs:h-6 sm:w-7 sm:h-7 md:w-8 md:h-8">
                                                                                         <path fillRule="evenodd" d="M6.75 5.25a.75.75 0 01.75-.75H9a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H7.5a.75.75 0 01-.75-.75V5.25zm7 0a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75h-1.5a.75.75 0 01-.75-.75V5.25z" clipRule="evenodd" />
                                                                                 </svg>
                                                                         ) : (
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="w-5 h-5 xs:w-6 xs:h-6 sm:w-7 sm:h-7 md:w-8 md:h-8">
                                                                                         <path fillRule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clipRule="evenodd" />
                                                                                 </svg>
                                                                         )}
                                                                 </button>
 
-                                                                <div className="flex flex-col flex-1 min-w-0">
-                                                                        <h3 className="font-bold text-xl text-gray-900 dark:text-white mb-1 truncate">{activeTrack.title}</h3>
-                                                                        <p className="text-sm text-gray-600 dark:text-gray-400 truncate">{activeTrack.artist}</p>
-                                                                </div>
-                                                        </div>
-
-                                                        <div className="flex flex-col space-y-2">
-                                                                <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-                                                                        <div className="max-w-[70%] truncate">
-                                                                                <span className="font-medium text-gray-700 dark:text-gray-300">Album:</span> {activeTrack.album}
-                                                                        </div>
-                                                                        <div className="inline-flex items-center">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 mr-1 text-primary dark:text-primary-dark">
-                                                                                        <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm1.5 4.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm0 10.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" clipRule="evenodd" />
-                                                                                </svg>
-                                                                                <span className="font-medium">{activeTrack.duration}</span>
-                                                                        </div>
-                                                                </div>
-
-                                                                <div className="mt-2 relative h-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                                                                        <div className="absolute top-0 left-0 h-2 bg-primary dark:bg-primary-dark rounded-full w-[30%]"></div>
-                                                                </div>
-
-                                                                <div className="flex justify-center mt-4 space-x-6">
-                                                                        <button className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark transition-colors">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                                                                                        <path d="M9.195 18.44c1.25.713 2.805-.19 2.805-1.629v-2.34l6.945 3.968c1.25.714 2.805-.188 2.805-1.628V8.688c0-1.44-1.555-2.342-2.805-1.628L12 11.03v-2.34c0-1.44-1.555-2.343-2.805-1.629l-7.108 4.062c-1.26.72-1.26 2.536 0 3.256l7.108 4.061z" />
-                                                                                </svg>
-                                                                        </button>
-
-                                                                        <button
-                                                                                onClick={togglePlay}
-                                                                                className="text-gray-900 dark:text-white hover:text-primary dark:hover:text-primary-dark transition-colors"
-                                                                        >
-                                                                                {isPlaying ? (
-                                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
-                                                                                                <path fillRule="evenodd" d="M6.75 5.25a.75.75 0 01.75-.75H9a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H7.5a.75.75 0 01-.75-.75V5.25zm7 0a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75h-1.5a.75.75 0 01-.75-.75V5.25z" clipRule="evenodd" />
-                                                                                        </svg>
-                                                                                ) : (
-                                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
-                                                                                                <path fillRule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clipRule="evenodd" />
-                                                                                        </svg>
-                                                                                )}
-                                                                        </button>
-
-                                                                        <button className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark transition-colors">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                                                                                        <path d="M5.055 7.06c-1.25-.714-2.805.189-2.805 1.628v8.123c0 1.44 1.555 2.342 2.805 1.628L12 14.471v2.34c0 1.44 1.555 2.342 2.805 1.628l7.108-4.061c1.26-.72 1.26-2.536 0-3.256L14.805 7.06C13.555 6.346 12 7.25 12 8.688v2.34L5.055 7.06z" />
-                                                                                </svg>
-                                                                        </button>
-                                                                </div>
+                                                                <button className="text-gray-400 dark:text-gray-500 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8">
+                                                                                <path d="M5.055 7.06c-1.25-.714-2.805.189-2.805 1.628v8.123c0 1.44 1.555 2.342 2.805 1.628L12 14.471v2.34c0 1.44 1.555 2.342 2.805 1.628l7.108-4.061c1.26-.72 1.26-2.536 0-3.256L14.805 7.06C13.555 6.346 12 7.25 12 8.688v2.34L5.055 7.06z" />
+                                                                        </svg>
+                                                                </button>
                                                         </div>
                                                 </div>
                                         </motion.div>

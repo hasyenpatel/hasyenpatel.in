@@ -192,19 +192,22 @@ const BlogCard = ({ post, index }: { post: BlogPost; index: number }) => {
                 }
         };
 
+        // Calculate delay factor for staggered animation that works better on mobile
+        const delayFactor = index < 6 ? index * 0.08 : 0.4;
+
         return (
                 <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-10%" }}
-                        transition={{ duration: 0.4, delay: index * 0.1 }}
-                        className="rounded-xl overflow-hidden shadow-md bg-white dark:bg-black border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-all duration-300"
+                        viewport={{ once: true, margin: "-5%" }}
+                        transition={{ duration: 0.4, delay: delayFactor }}
+                        className="rounded-xl overflow-hidden shadow-md bg-white dark:bg-black border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-all duration-300 h-full flex flex-col"
                 >
                         {/* Image */}
-                        <div className="h-48 overflow-hidden relative">
+                        <div className="h-24 xs:h-28 sm:h-36 md:h-48 overflow-hidden relative">
                                 {post.imageUrl ? (
                                         <div
-                                                className="w-full h-full bg-cover bg-center"
+                                                className="w-full h-full bg-cover bg-center transform transition-transform duration-700 hover:scale-110"
                                                 style={{
                                                         backgroundImage: `url(${post.imageUrl})`,
                                                 }}
@@ -213,26 +216,26 @@ const BlogCard = ({ post, index }: { post: BlogPost; index: number }) => {
                                         <div className="w-full h-full bg-gradient-to-br from-primary/30 to-primary-dark/30" />
                                 )}
                                 {/* Category badge */}
-                                <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs text-white ${getCategoryColor(post.category)}`}>
+                                <div className={`absolute top-2 right-2 px-2 py-0.5 rounded-full text-[10px] xs:text-xs text-white ${getCategoryColor(post.category)}`}>
                                         {post.category}
                                 </div>
                         </div>
 
                         {/* Content */}
-                        <div className="p-5">
-                                <div className="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400 mb-3">
-                                        <span>{formatDate(post.date)}</span>
-                                        <span>{post.readTime}</span>
+                        <div className="p-2 xs:p-3 sm:p-4 md:p-5 flex flex-col flex-grow">
+                                <div className="flex justify-between items-center text-[10px] xs:text-xs text-gray-500 dark:text-gray-400 mb-1 sm:mb-3">
+                                        <span className="truncate mr-1">{formatDate(post.date)}</span>
+                                        <span className="whitespace-nowrap">{post.readTime}</span>
                                 </div>
-                                <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">{post.title}</h3>
-                                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2">{post.excerpt}</p>
+                                <h3 className="text-sm xs:text-base md:text-xl font-bold mb-1 text-gray-900 dark:text-white line-clamp-1 sm:line-clamp-2">{post.title}</h3>
+                                <p className="text-gray-600 dark:text-gray-300 text-xs mb-2 sm:mb-3 line-clamp-1 sm:line-clamp-2 flex-grow">{post.excerpt}</p>
 
                                 <Link
                                         href={`/blog/${post.id}`}
-                                        className="inline-flex items-center text-primary dark:text-primary-dark font-medium text-sm"
+                                        className="inline-flex items-center text-primary dark:text-primary-dark font-medium text-xs sm:text-sm mt-auto"
                                 >
                                         Read more
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
                                                 <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                                         </svg>
                                 </Link>
@@ -279,24 +282,24 @@ export default function Blog() {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
                                         transition={{ duration: 0.8 }}
-                                        className="text-center mb-10"
+                                        className="text-center mb-8 sm:mb-10"
                                 >
-                                        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center font-display text-gray-900 dark:text-white">Blog</h2>
+                                        <h2 className="text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-center font-display text-gray-900 dark:text-white">Blog</h2>
                                         <p className="text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
                                                 My thoughts, tutorials, and insights on technology, development, and creativity.
                                         </p>
                                 </motion.div>
 
                                 {/* Search and filter controls */}
-                                <div className="mb-8 flex flex-col md:flex-row items-center gap-4 justify-between">
-                                        <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+                                <div className="mb-6 sm:mb-8 flex flex-col md:flex-row items-center gap-4 justify-between">
+                                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full">
                                                 <div className="relative w-full md:w-64">
                                                         <input
                                                                 type="text"
                                                                 placeholder="Search blog posts..."
                                                                 value={searchTerm}
                                                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                                                className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark outline-none transition-all"
+                                                                className="w-full px-3 sm:px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark outline-none transition-all"
                                                         />
                                                         {searchTerm && (
                                                                 <button
@@ -310,29 +313,31 @@ export default function Blog() {
                                                         )}
                                                 </div>
 
-                                                {/* Category filter buttons */}
-                                                <div className="flex items-center gap-3">
-                                                        <span className="text-gray-600 dark:text-gray-400 text-sm whitespace-nowrap">Filter by:</span>
-                                                        <div className="flex gap-2 flex-wrap">
-                                                                {categories.map((category) => (
-                                                                        <button
-                                                                                key={category}
-                                                                                onClick={() => setActiveCategory(category)}
-                                                                                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 capitalize ${activeCategory === category
-                                                                                        ? 'bg-primary dark:bg-primary-dark text-white shadow-md'
-                                                                                        : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-                                                                                        }`}
-                                                                        >
-                                                                                {category}
-                                                                        </button>
-                                                                ))}
+                                                {/* Category filter buttons - Horizontally Scrollable */}
+                                                <div className="flex items-center w-full overflow-hidden">
+                                                        <span className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm whitespace-nowrap mr-2 sm:mr-3">Filter by:</span>
+                                                        <div className="overflow-x-auto no-scrollbar flex-1">
+                                                                <div className="flex gap-2 w-max px-1 py-1">
+                                                                        {categories.map((category) => (
+                                                                                <button
+                                                                                        key={category}
+                                                                                        onClick={() => setActiveCategory(category)}
+                                                                                        className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 capitalize flex-shrink-0 ${activeCategory === category
+                                                                                                ? 'bg-primary dark:bg-primary-dark text-white shadow-md'
+                                                                                                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                                                                                                }`}
+                                                                                >
+                                                                                        {category}
+                                                                                </button>
+                                                                        ))}
+                                                                </div>
                                                         </div>
                                                 </div>
                                         </div>
                                 </div>
 
-                                {/* Blog grid */}
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {/* Blog grid - Always 2 columns on mobile, 3 on large screens */}
+                                <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 xs:gap-4 sm:gap-6">
                                         {filteredPosts.map((post, index) => (
                                                 <BlogCard key={post.id} post={post} index={index} />
                                         ))}

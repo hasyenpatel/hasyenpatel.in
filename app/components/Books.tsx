@@ -196,7 +196,7 @@ export default function Books() {
         const [searchTerm, setSearchTerm] = useState('');
         const [filterType, setFilterType] = useState('all'); // 'all', 'title', 'author'
         const [showSuggestionForm, setShowSuggestionForm] = useState(false);
-        const [suggestion, setSuggestion] = useState({ title: '', author: '', why: '' });
+        const [suggestion, setSuggestion] = useState({ title: '', author: '', why: '', suggestedBy: '' });
         const [isSubmitting, setIsSubmitting] = useState(false);
         const [submitSuccess, setSubmitSuccess] = useState(false);
 
@@ -234,7 +234,7 @@ export default function Books() {
                                 body: JSON.stringify({
                                         name: 'Book Suggestion',
                                         email: 'booksuggestion@example.com',
-                                        message: `Book Suggestion:\n\nTitle: ${suggestion.title}\nAuthor: ${suggestion.author}\nReason: ${suggestion.why || 'No reason provided'}`
+                                        message: `Book Suggestion:\n\nTitle: ${suggestion.title}\nAuthor: ${suggestion.author}\nReason: ${suggestion.why || 'No reason provided'}\nSuggested by: ${suggestion.suggestedBy || 'Anonymous'}`
                                 }),
                         });
 
@@ -248,7 +248,7 @@ export default function Books() {
                         // Reset form after delay
                         setTimeout(() => {
                                 setShowSuggestionForm(false);
-                                setSuggestion({ title: '', author: '', why: '' });
+                                setSuggestion({ title: '', author: '', why: '', suggestedBy: '' });
                                 setSubmitSuccess(false);
                         }, 3000);
                 } catch (error) {
@@ -300,7 +300,6 @@ export default function Books() {
 
                                                 {/* Improved Filter buttons with pill style */}
                                                 <div className="flex items-center gap-3">
-                                                        <span className="text-gray-600 dark:text-gray-400 text-sm whitespace-nowrap">Filter by:</span>
                                                         <div className="flex space-x-2">
                                                                 <button
                                                                         onClick={() => setFilterType('all')}
@@ -420,6 +419,21 @@ export default function Books() {
                                                                                         value={suggestion.author}
                                                                                         onChange={handleSuggestionChange}
                                                                                         required
+                                                                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                                                                                />
+                                                                        </div>
+
+                                                                        <div className="mb-4">
+                                                                                <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300" htmlFor="suggestedBy">
+                                                                                        Suggested by
+                                                                                </label>
+                                                                                <input
+                                                                                        type="text"
+                                                                                        id="suggestedBy"
+                                                                                        name="suggestedBy"
+                                                                                        value={suggestion.suggestedBy}
+                                                                                        onChange={handleSuggestionChange}
+                                                                                        placeholder="Your name"
                                                                                         className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                                                                                 />
                                                                         </div>
