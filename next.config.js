@@ -1,18 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-        // Enable experimental features for better performance
-        experimental: {
-                optimizeCss: true,
-        },
+        // Enable compression
+        compress: true,
 
-        // Compress images
+        // Optimize images
         images: {
                 formats: ['image/webp', 'image/avif'],
                 minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
         },
-
-        // Enable compression
-        compress: true,
 
         // Optimize fonts
         optimizeFonts: true,

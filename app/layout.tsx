@@ -67,11 +67,22 @@ export default function RootLayout({
         return (
                 <html lang="en" className={`scroll-smooth ${inter.variable}`}>
                         <head>
-                                {/* Preload critical resources */}
+                                {/* Critical resource preloading */}
                                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
 
-                                {/* Optimized theme script - inline critical CSS */}
+                                {/* Preload critical above-the-fold image */}
+                                <link
+                                        rel="preload"
+                                        as="image"
+                                        href="/images/landing.jpeg"
+                                        fetchPriority="high"
+                                />
+
+                                {/* Preload critical CSS */}
+                                <link rel="preload" href="/globals.css" as="style" />
+
+                                {/* Optimized theme script - inline and minimal */}
                                 <script
                                         dangerouslySetInnerHTML={{
                                                 __html: `
@@ -94,7 +105,7 @@ export default function RootLayout({
                                 />
 
                                 {/* Performance and SEO meta tags */}
-                                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                                <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
                                 <meta name="theme-color" content="#000000" />
                                 <meta name="color-scheme" content="light dark" />
 
@@ -118,18 +129,19 @@ export default function RootLayout({
                                         {children}
                                 </main>
 
-                                {/* Performance monitoring script */}
+                                {/* Minimal performance monitoring - non-blocking */}
                                 <script
+                                        defer
                                         dangerouslySetInnerHTML={{
                                                 __html: `
-                                                // Track performance metrics
                                                 if (typeof window !== 'undefined' && 'performance' in window) {
                                                         window.addEventListener('load', function() {
-                                                                // Basic performance logging
-                                                                const perfData = performance.getEntriesByType('navigation')[0];
-                                                                if (perfData && window.console) {
-                                                                        console.log('Page Load Time:', perfData.loadEventEnd - perfData.loadEventStart, 'ms');
-                                                                }
+                                                                try {
+                                                                        const perfData = performance.getEntriesByType('navigation')[0];
+                                                                        if (perfData && window.console && process.env.NODE_ENV === 'development') {
+                                                                                console.log('Page Load Time:', Math.round(perfData.loadEventEnd - perfData.loadEventStart), 'ms');
+                                                                        }
+                                                                } catch(e) {}
                                                         });
                                                 }
                                                 `,
