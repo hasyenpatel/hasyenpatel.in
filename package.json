@@ -1,12 +1,8 @@
 {
-   https://hasyenpatel.github.io/hasyenpatel.in/
-
-}
-
-{
   "name": "hasyenpatel.in",
   "version": "1.0.0",
   "description": "Personal website for Hasyen Patel",
+  "homepage": "https://hasyenpatel.github.io/hasyenpatel.in",
   "main": "index.js",
   "scripts": {
     "dev": "next dev",

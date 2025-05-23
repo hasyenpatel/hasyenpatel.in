@@ -271,9 +271,6 @@ export default function Blog() {
                 );
         });
 
-        // Expose blogPosts for external use
-        Blog.getAllPosts = () => blogPosts;
-
         return (
                 <section id="blog" className="py-20 bg-white dark:bg-black">
                         <div className="container-custom max-w-6xl">
