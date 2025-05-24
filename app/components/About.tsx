@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -9,10 +7,10 @@ export default function About() {
                 <section id="about" className="py-20 bg-white dark:bg-black">
                         <div className="container-custom max-w-5xl">
                                 <motion.div
-                                        initial={{ opacity: 0, y: 20 }}
+                                        initial={{ opacity: 0, y: 15 }}
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
-                                        transition={{ duration: 0.8 }}
+                                        transition={{ duration: 0.4 }}
                                         className="mb-8"
                                 >
                                         <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center font-display text-gray-900 dark:text-white">About Me</h2>
@@ -21,18 +19,18 @@ export default function About() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
                                         {/* Image with improved animation */}
                                         <motion.div
-                                                initial={{ opacity: 0, x: -50 }}
+                                                initial={{ opacity: 0, x: -30 }}
                                                 whileInView={{ opacity: 1, x: 0 }}
                                                 viewport={{ once: true }}
-                                                transition={{ duration: 0.8, delay: 0.2 }}
+                                                transition={{ duration: 0.5, delay: 0.1 }}
                                                 className="relative mx-auto h-full"
                                         >
                                                 <div className="w-full max-w-md overflow-hidden relative rounded-xl shadow-xl bg-gradient-to-b from-primary/10 to-transparent p-2 dark:from-primary-dark/10 h-full">
                                                         <motion.div
-                                                                initial={{ scale: 1.1 }}
+                                                                initial={{ scale: 1.05 }}
                                                                 whileInView={{ scale: 1 }}
-                                                                whileHover={{ scale: 1.03 }}
-                                                                transition={{ duration: 1.2, ease: "easeOut" }}
+                                                                whileHover={{ scale: 1.02 }}
+                                                                transition={{ duration: 0.6, ease: "easeOut" }}
                                                                 className="relative w-full h-full overflow-hidden rounded-lg"
                                                         >
                                                                 <Image
@@ -46,10 +44,10 @@ export default function About() {
 
                                                                 {/* Subtle hover effects */}
                                                                 <motion.div
-                                                                        initial={{ opacity: 0.7 }}
+                                                                        initial={{ opacity: 0.5 }}
                                                                         whileInView={{ opacity: 0 }}
-                                                                        whileHover={{ opacity: 0.2 }}
-                                                                        transition={{ duration: 1, delay: 0.3 }}
+                                                                        whileHover={{ opacity: 0.15 }}
+                                                                        transition={{ duration: 0.4, delay: 0.1 }}
                                                                         className="absolute inset-0 bg-gradient-to-tr from-primary/30 to-transparent"
                                                                 />
                                                         </motion.div>
@@ -62,10 +60,10 @@ export default function About() {
 
                                         {/* Content */}
                                         <motion.div
-                                                initial={{ opacity: 0, x: 50 }}
+                                                initial={{ opacity: 0, x: 30 }}
                                                 whileInView={{ opacity: 1, x: 0 }}
                                                 viewport={{ once: true }}
-                                                transition={{ duration: 0.8, delay: 0.4 }}
+                                                transition={{ duration: 0.5, delay: 0.2 }}
                                                 className="bg-white dark:bg-black rounded-xl p-6 shadow-md border border-gray-100 dark:border-gray-800 h-full"
                                         >
                                                 <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white font-display flex items-center">

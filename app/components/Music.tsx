@@ -401,13 +401,13 @@ export default function Music() {
                                                 <div className="mb-6 sm:mb-8 flex flex-col md:flex-row items-center gap-4 justify-between">
                                                         <div className="flex flex-col sm:flex-row gap-4 w-full">
                                                                 <div className="relative w-full md:w-64">
-                                                                        <input
-                                                                                type="text"
+                                                                <input
+                                                                        type="text"
                                                                                 placeholder="Search music..."
-                                                                                value={searchTerm}
-                                                                                onChange={(e) => setSearchTerm(e.target.value)}
+                                                                        value={searchTerm}
+                                                                        onChange={(e) => setSearchTerm(e.target.value)}
                                                                                 className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark outline-none transition-all"
-                                                                        />
+                                                                />
                                                                         {searchTerm && (
                                                                                 <button
                                                                                         onClick={() => setSearchTerm('')}
@@ -415,39 +415,39 @@ export default function Music() {
                                                                                 >
                                                                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                                                                                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                                                                                        </svg>
+                                                                        </svg>
                                                                                 </button>
                                                                         )}
                                                                 </div>
 
                                                                 <div className="flex space-x-2 overflow-x-auto no-scrollbar pb-1">
-                                                                        <button
-                                                                                onClick={() => setFilterType('all')}
+                                                                <button
+                                                                        onClick={() => setFilterType('all')}
                                                                                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap ${filterType === 'all'
                                                                                         ? 'bg-primary dark:bg-primary-dark text-white shadow-md'
                                                                                         : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                                                                                         }`}
-                                                                        >
-                                                                                All
-                                                                        </button>
-                                                                        <button
-                                                                                onClick={() => setFilterType('title')}
+                                                                >
+                                                                        All
+                                                                </button>
+                                                                <button
+                                                                        onClick={() => setFilterType('title')}
                                                                                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap ${filterType === 'title'
                                                                                         ? 'bg-primary dark:bg-primary-dark text-white shadow-md'
                                                                                         : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                                                                                         }`}
-                                                                        >
-                                                                                Title
-                                                                        </button>
-                                                                        <button
-                                                                                onClick={() => setFilterType('author')}
+                                                                >
+                                                                        Title
+                                                                </button>
+                                                                <button
+                                                                        onClick={() => setFilterType('author')}
                                                                                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap ${filterType === 'author'
                                                                                         ? 'bg-primary dark:bg-primary-dark text-white shadow-md'
                                                                                         : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                                                                                         }`}
-                                                                        >
-                                                                                Artist
-                                                                        </button>
+                                                                >
+                                                                        Artist
+                                                                </button>
                                                                 </div>
                                                         </div>
                                                 </div>

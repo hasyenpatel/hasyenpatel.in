@@ -193,15 +193,15 @@ const BlogCard = ({ post, index }: { post: BlogPost; index: number }) => {
         };
 
         // Calculate delay factor for staggered animation that works better on mobile
-        const delayFactor = index < 6 ? index * 0.08 : 0.4;
+        const delayFactor = index < 6 ? index * 0.04 : 0.2;
 
         return (
                 <motion.div
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 15 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: "-5%" }}
-                        transition={{ duration: 0.4, delay: delayFactor }}
-                        className="rounded-xl overflow-hidden shadow-md bg-white dark:bg-black border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-all duration-300 h-full flex flex-col"
+                        transition={{ duration: 0.3, delay: delayFactor }}
+                        className="rounded-xl overflow-hidden shadow-md bg-white dark:bg-black border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-all duration-200 h-full flex flex-col"
                 >
                         {/* Image */}
                         <div className="h-24 xs:h-28 sm:h-36 md:h-48 overflow-hidden relative">
@@ -275,10 +275,10 @@ export default function Blog() {
                 <section id="blog" className="py-20 bg-white dark:bg-black">
                         <div className="container-custom max-w-6xl">
                                 <motion.div
-                                        initial={{ opacity: 0, y: 20 }}
+                                        initial={{ opacity: 0, y: 15 }}
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
-                                        transition={{ duration: 0.8 }}
+                                        transition={{ duration: 0.4 }}
                                         className="text-center mb-8 sm:mb-10"
                                 >
                                         <h2 className="text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-center font-display text-gray-900 dark:text-white">Blog</h2>

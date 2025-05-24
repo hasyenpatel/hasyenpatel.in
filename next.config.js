@@ -1,28 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-        // Enable compression
-        compress: true,
-
-        // Optimize images
+        reactStrictMode: true,
+        swcMinify: true,
+        compiler: {
+                removeConsole: process.env.NODE_ENV === 'production',
+        },
         images: {
                 formats: ['image/webp', 'image/avif'],
-                minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
+                deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+                imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
         },
-
-        // Optimize fonts
-        optimizeFonts: true,
-
-        // Bundle analyzer (when ANALYZE=true)
-        ...(process.env.ANALYZE === 'true' && {
-                webpack: (config) => {
-                        config.plugins.push(
-                                new (require('@next/bundle-analyzer'))({
-                                        enabled: true,
-                                })
-                        )
-                        return config
-                },
-        }),
+        experimental: {
+                optimizePackageImports: ['framer-motion', 'three'],
+        },
+        poweredByHeader: false,
+        compress: true,
 }
 
 module.exports = nextConfig 
